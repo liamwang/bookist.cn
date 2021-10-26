@@ -1,0 +1,9 @@
+{
+  "files.exclude": {
+    "**/.vs": true,
+    "**/bin": true,
+    "**/obj": true,
+    "**/*.csproj.user": true
+  },
+  "vssolution.showMode": "activityBar"
+}
