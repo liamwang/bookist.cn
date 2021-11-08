@@ -1,0 +1,55 @@
+@model Bookist.Web.Models.BookVM
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+    <title>书大师 • 每天分享一本好书</title>
+    <link rel="stylesheet" href="~/index.css" />
+</head>
+
+<body>
+    <header>
+        <div class="brand-logo">
+            <span>书大师</span>
+            <small>•</small>
+            <span>每天分享一本好书</span>
+        </div>
+    </header>
+    <main>
+        <div class="book-card">
+            <img src="@Model.Cover" />
+            <div class="book-card__body">
+                <div class="book-card__info">
+                    <h3>@Model.Title</h3>
+                    <dl>
+                        <dt>作者:</dt>
+                        <dd>@Model.Author</dd>
+                    </dl>
+                    <dl>
+                        <dt>日期:</dt>
+                        <dd>@Model.PubDate.ToString("yyyy年MM月")</dd>
+                    </dl>
+                    <dl>
+                        <dt>简介:</dt>
+                        <dd>@Model.Description</dd>
+                    </dl>
+                </div>
+                <div class="book-card__oprate">
+                    <a class="btn-primary" href="@Model.FetchUrl" target="_blank">下载 @Model.Format</a>
+                    <span>提取码：<b class="book-card__code">@Model.FetchCode</b></span>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        © Bookist.cc 2021
+    </footer>
+</body>
+
+</html>

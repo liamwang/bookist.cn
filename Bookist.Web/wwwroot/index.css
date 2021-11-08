@@ -112,3 +112,16 @@ footer {
 .book-card__code {
   color: #ff8850;
 }
+
+@media screen and (max-width: 576px) {
+  .book-card {
+    flex-direction: column;
+  }
+  .book-card img {
+    display: block;
+    margin: 0 auto;
+  }
+  .book-card__info h3 {
+    text-align: center;
+  }
+}
