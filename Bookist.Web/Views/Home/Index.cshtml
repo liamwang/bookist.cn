@@ -1,26 +1,29 @@
-@model Book
+@model IEnumerable<Book>
 
-<div class="book-card">
-    <img src="@Model.Cover" />
+@foreach(var book in Model)
+{
+   <div class="book-card">
+    <img src="@book.Cover" alt="" />
     <div class="book-card__body">
         <div class="book-card__info">
-            <h3>@Model.Title</h3>
+            <h3>@book.Title</h3>
             <dl>
                 <dt>作者:</dt>
-                <dd>@Model.Author</dd>
+                <dd>@book.Author</dd>
             </dl>
             <dl>
                 <dt>日期:</dt>
-                <dd>@Model.PubDate.ToString("yyyy年MM月")</dd>
+                <dd>@book.PubDate.ToString("yyyy年MM月")</dd>
             </dl>
             <dl>
                 <dt>简介:</dt>
-                <dd>@Model.Description</dd>
+                <dd>@book.Description</dd>
             </dl>
         </div>
         <div class="book-card__oprate">
-            <a class="btn-primary" href="@Model.FetchUrl" target="_blank">下载 @Model.Format</a>
-            <span>提取码：<b class="book-card__code">@Model.FetchCode</b></span>
+            <a class="btn-primary" href="@book.FetchUrl" target="_blank">下载 @book.Format</a>
+            <span>提取码：<b class="book-card__code">@book.FetchCode</b></span>
         </div>
     </div>
-</div>
+</div> 
+}

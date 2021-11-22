@@ -8,15 +8,17 @@ public class HomeController : Controller
 {
     private readonly BookistDbContext _context;
 
+    private readonly DbSet<Book> _books;
+
     public HomeController(BookistDbContext context)
     {
         _context = context;
+        _books = context.Set<Book>();
     }
 
     public async Task<ViewResult> Index()
     {
-        var book = await _context.Set<Book>()
-            .OrderBy(x => x.Id).LastOrDefaultAsync();
-        return View(book);
+        var books = await _books.ToListAsync();
+        return View(books);
     }
 }
