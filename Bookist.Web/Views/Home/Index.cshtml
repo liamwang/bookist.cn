@@ -1,29 +1,33 @@
 @model IEnumerable<Book>
 
-@foreach(var book in Model)
+
+@foreach (var book in Model)
 {
-   <div class="book-card">
-    <img src="@book.Cover" alt="" />
-    <div class="book-card__body">
-        <div class="book-card__info">
-            <h3>@book.Title</h3>
-            <dl>
-                <dt>作者:</dt>
-                <dd>@book.Author</dd>
-            </dl>
-            <dl>
-                <dt>日期:</dt>
-                <dd>@book.PubDate.ToString("yyyy年MM月")</dd>
-            </dl>
-            <dl>
-                <dt>简介:</dt>
-                <dd>@book.Description</dd>
-            </dl>
-        </div>
-        <div class="book-card__oprate">
-            <a class="btn-primary" href="@book.FetchUrl" target="_blank">下载 @book.Format</a>
-            <span>提取码：<b class="book-card__code">@book.FetchCode</b></span>
+    <div class="card mb-4 p-1 bg-white">
+        <div class="d-md-flex">
+            <div class="cover me-md-4">
+                <img src="@book.Cover" alt="">
+            </div>
+            <div class="d-flex flex-column">
+                <div class="flex-grow-1">
+                    <h3 class="h5 ellipsis my-2">@book.Title</h3>
+                    <div class="my-2">
+                        <span class="me-1">作者:</span>
+                        <span>@book.Author</span>
+                    </div>
+                    <div class="my-2">
+                        <span class="me-1">日期:</span>
+                        <span>@book.PubDate.ToString("yyyy年MM月")</span>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <a href="@book.FetchUrl" target="_blank" class="btn btn-primary me-2">下载 @book.Format</a>
+                    @if (!string.IsNullOrEmpty(book.FetchCode))
+                    {
+                        <span>提取码：<b class="book-card__code">@book.FetchCode</b></span>
+                    }
+                </div>
+            </div>
         </div>
     </div>
-</div> 
 }

@@ -7,23 +7,37 @@
     <meta name="force-rendering" content="webkit" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-    <title>书大师 • 每天分享一本好书</title>
-    <link rel="stylesheet" href="~/index.css" />
+    <title>书大师 • 只分享精品好书</title>
+    <link rel="stylesheet" href="~/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="~/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Bookist.Web.styles.css" asp-append-version="true" />
 </head>
 
-<body>
+<body class="bg-light">
     <header>
-        <div class="brand-logo">
-            <span>书大师</span>
-            <small>•</small>
-            <span>每天分享一本好书</span>
-        </div>
+        <nav class="navbar navbar-light bg-white border-bottom mb-4">
+            <div class="container">
+                <a class="navbar-brand" href="/">书大师 • 只分享精品好书</a>
+            </div>
+        </nav>
     </header>
-    <main>
-         @RenderBody()
-    </main>
-    <footer>
-        © Bookist.cc 2021
+    <div class="container">
+        <div class="row">
+            <main class="col-md-8">
+            @RenderBody()
+            </main>
+            <aside class="sidebar col-md-4">
+                <div class="card">
+                    <div class="card-header">热门标签</div>
+                    <div class="card-body">暂无~</div>
+                </div>
+            </aside>
+        </div>
+    </div>
+    <footer class="border-top mt-4">
+        <div class="container text-center p-3">
+            <small class="text-muted">© Bookist.cc 2021</small>
+        </div>
     </footer>
 </body>
 

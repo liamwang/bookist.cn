@@ -1,0 +1,15 @@
+﻿.cover {
+  min-width: 150px;
+  max-width: 150px;
+}
+
+.ellipsis {
+  display: block;
+  display: -webkit-box;
+  max-width: 60em;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5em;
+}
