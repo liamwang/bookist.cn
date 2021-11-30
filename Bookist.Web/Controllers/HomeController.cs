@@ -1,4 +1,5 @@
 using Bookist.Web.Models;
+using Bookist.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,9 +17,22 @@ public class HomeController : Controller
         _books = context.Set<Book>();
     }
 
-    public async Task<ViewResult> Index()
+    public async Task<ViewResult> Index(int page = 1, int size = 5)
     {
-        var books = await _books.ToListAsync();
-        return View(books);
+        BookListVM vm = new()
+        {
+            Books = await _books
+                .OrderByDescending(x => x.Id)
+                .Skip((page - 1) * size)
+                .Take(size)
+                .ToListAsync(),
+            Pager = new PagerVM
+            {
+                Page = page,
+                Size = size,
+                TotalItems = await _books.CountAsync()
+            }
+        };
+        return View(vm);
     }
 }

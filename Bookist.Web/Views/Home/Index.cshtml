@@ -1,7 +1,6 @@
-@model IEnumerable<Book>
+@model BookListVM
 
-
-@foreach (var book in Model)
+@foreach (var book in Model.Books)
 {
     <div class="card mb-4 p-1 bg-white">
         <div class="d-md-flex">
@@ -31,3 +30,6 @@
         </div>
     </div>
 }
+
+<div class="text-center" page-model="@Model.Pager" page-action="Index"></div>
+
