@@ -16,6 +16,14 @@ var app = builder.Build();
 
 // 注册中间件
 app.UseStaticFiles();
-app.MapDefaultControllerRoute();
+app.UseRouting();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute("home", "",
+        new { controller = "Home", Action = "Index", page = 1 });
+    endpoints.MapControllerRoute("page", "page/{page}",
+        new { Controller = "Home", Action = "Index" });
+    endpoints.MapDefaultControllerRoute();
+});
 
 app.Run();
