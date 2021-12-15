@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "AppLayout";
+}
+<header>
+    <nav class="navbar navbar-light bg-white border-bottom mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">书大师 • 只分享精品好书</a>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <div class="row">
+        <main class="col-md-8">
+            @RenderBody()
+        </main>
+        <aside class="sidebar col-md-4">
+            <div class="card">
+                <div class="card-header">热门标签</div>
+                <div class="card-body">暂无~</div>
+            </div>
+        </aside>
+    </div>
+</div>
+<footer class="border-top mt-4">
+    <div class="container text-center p-3">
+        <small class="text-muted">© Bookist.cc 2021</small>
+    </div>
+</footer>
