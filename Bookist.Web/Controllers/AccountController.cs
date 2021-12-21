@@ -1,6 +1,7 @@
 ﻿using Bookist.Web.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -52,5 +53,12 @@ public class AccountController : Controller
         TempData["Message"] = "用户名或密码错误！";
 
         return View(vm);
+    }
+
+    [Authorize]
+    public async Task<IActionResult> Logout(string returnUrl = "/")
+    {
+        await HttpContext.SignOutAsync();
+        return LocalRedirect(returnUrl);
     }
 }

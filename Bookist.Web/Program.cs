@@ -16,6 +16,9 @@ builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(x => x.LoginPath = "/account/login");
 
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+
 var app = builder.Build();
 
 // 注册中间件
@@ -32,6 +35,9 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute("page", "page/{page}",
         new { Controller = "Home", Action = "Index" });
     endpoints.MapDefaultControllerRoute();
+
+    endpoints.MapBlazorHub();
+    endpoints.MapFallbackToPage("/admin/{*catchall}", "/Admin/_Host");
 });
 
 app.Run();

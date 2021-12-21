@@ -18,12 +18,12 @@
                 <input asp-for="ReturnUrl" type="hidden" />
                 <div class="mb-3">
                     <label asp-for="Username" class="control-label">用户名</label>
-                    <input asp-for="Username" class="form-control" />
+                    <input asp-for="Username" class="form-control" placeholder="admin" />
                     <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Password" class="control-label">密码</label>
-                    <input asp-for="Password" type="password" class="form-control" />
+                    <input asp-for="Password" type="password" class="form-control" placeholder="bookist.cc" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="mb-3 form-check">
