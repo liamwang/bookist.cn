@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Bookist.Web.Entities;
+namespace Bookist.Entities;
 
 public class Book
 {

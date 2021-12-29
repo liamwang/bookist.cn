@@ -1,6 +1,6 @@
 ﻿@page "/admin"
 @page "/admin/books"
-@inject BookistDbContext context
+@inject BookService bookService
 
 <PageTitle>书箱管理</PageTitle>
 <Card>
@@ -42,13 +42,7 @@
 
     async Task QueryDataAsync(int page = 1)
     {
-        PageData.List = await context.Set<Book>()
-            .AsNoTracking()
-            .OrderByDescending(x => x.Id)
-            .Page(page, PageSize)
-            .ToListAsync();
-        PageData.Total = await context.Set<Book>()
-            .CountAsync();
+        PageData = await bookService.GetPageAsync(page,PageSize);
     }
 
     async Task OnPageIndexChange(PaginationEventArgs args)

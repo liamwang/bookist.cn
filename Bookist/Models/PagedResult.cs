@@ -1,4 +1,4 @@
-﻿namespace Bookist.Web.Models;
+﻿namespace Bookist.Models;
 
 public class PagedResult<T> where T : new()
 {

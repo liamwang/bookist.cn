@@ -1,11 +1,10 @@
 ﻿using Bookist.Web.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Bookist.Web.Common;
+namespace Microsoft.AspNetCore.Mvc;
 
 [HtmlTargetElement("div", Attributes = "page-model")]
 public class PagerTagHelper : TagHelper

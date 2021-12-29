@@ -1,36 +1,30 @@
-using Bookist.Web.Entities;
-using Bookist.Web.Models;
+using Bookist.Services;
 using Bookist.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bookist.Web.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly BookistDbContext _context;
+    private readonly BookService _bookService;
 
-    private readonly DbSet<Book> _books;
-
-    public HomeController(BookistDbContext context)
+    public HomeController(BookService bookService)
     {
-        _context = context;
-        _books = context.Set<Book>();
+        _bookService = bookService;
     }
 
     public async Task<ViewResult> Index(int page = 1, int size = 5)
     {
+        var pageData = await _bookService
+            .GetPageAsync(page, size);
         BookListVM vm = new()
         {
-            Books = await _books
-                .OrderByDescending(x => x.Id)
-                .Page(page, size)
-                .ToListAsync(),
-            Pager = new PagerVM
+            Books = pageData.List,
+            Pager = new()
             {
                 Page = page,
                 Size = size,
-                TotalItems = await _books.CountAsync()
+                TotalItems = pageData.Total
             }
         };
         return View(vm);
