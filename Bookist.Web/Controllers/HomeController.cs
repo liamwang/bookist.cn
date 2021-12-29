@@ -1,3 +1,4 @@
+using Bookist.Web.Entities;
 using Bookist.Web.Models;
 using Bookist.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +24,7 @@ public class HomeController : Controller
         {
             Books = await _books
                 .OrderByDescending(x => x.Id)
-                .Skip((page - 1) * size)
-                .Take(size)
+                .Page(page, size)
                 .ToListAsync(),
             Pager = new PagerVM
             {

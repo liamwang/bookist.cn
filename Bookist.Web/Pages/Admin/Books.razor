@@ -1,6 +1,58 @@
 ﻿@page "/admin"
 @page "/admin/books"
+@inject BookistDbContext context
 
 <PageTitle>书箱管理</PageTitle>
+<Card>
+    <Table Bordered TItem=Book DataSource=PageData.List Total=PageData.Total OnPageIndexChange=OnPageIndexChange>
+        <Column @bind-Field="@context.Cover" Align="ColumnAlign.Center">
+            <div style="margin:-16px;"><img src="@context.Cover" alt="" style="height:40px" /></div>
+        </Column>
+        <Column @bind-Field="@context.Title">
+        </Column>
+        <Column @bind-Field="@context.Author">
+        </Column>
+        <Column @bind-Field="@context.PubDate" Align="ColumnAlign.Center">
+            @context.PubDate.ToString("yyyy-MM")
+        </Column>
+        <Column @bind-Field="@context.Format" Align="ColumnAlign.Center">
+        </Column>
+        <Column @bind-Field="@context.FetchUrl" Align="ColumnAlign.Center">
+            <a href="@context.FetchUrl" target="_blank">打开</a>
+        </Column>
+        <Column @bind-Field="@context.FetchCode" Align="ColumnAlign.Center">
+        </Column>
 
-<h3>这是【书籍管理】页面</h3>
+        <ActionColumn Title="操作" Align="ColumnAlign.Center">
+            <Button Type="@ButtonType.Primary" Size="small">编辑</Button>
+            <Button Danger Size="small">删除</Button>
+        </ActionColumn>
+    </Table>
+</Card>
+
+@code {
+    const int PageSize = 8;
+
+    PagedResult<Book> PageData = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await QueryDataAsync();
+    }
+
+    async Task QueryDataAsync(int page = 1)
+    {
+        PageData.List = await context.Set<Book>()
+            .AsNoTracking()
+            .OrderByDescending(x => x.Id)
+            .Page(page, PageSize)
+            .ToListAsync();
+        PageData.Total = await context.Set<Book>()
+            .CountAsync();
+    }
+
+    async Task OnPageIndexChange(PaginationEventArgs args)
+    {
+        await QueryDataAsync(args.Page);
+    }
+}

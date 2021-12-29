@@ -1,7 +1,7 @@
 ﻿@page "/admin"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Web
-@namespace Bookist.Web.Pages.Admin
+@namespace Bookist.Web.Pages.Admin.Shared
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @attribute [Authorize]
 
@@ -15,14 +15,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
     <title>书大师 • 后台管理</title>
     <base href="~/" />
-    <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="css/app.css" asp-append-version="true" />
+    <link rel="stylesheet" href="_content/AntDesign/css/ant-design-blazor.css" >
     <link rel="stylesheet" href="Bookist.Web.styles.css" asp-append-version="true" />
-    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+    <component type="typeof(HeadOutlet)" render-mode="Server" />
 </head>
 <body>
-    <component type="typeof(App)" render-mode="ServerPrerendered" />
+    <component type="typeof(App)" render-mode="Server" />
 
     <script src="_framework/blazor.server.js"></script>
+    <script src="_content/AntDesign/js/ant-design-blazor.js"></script>
 </body>
 </html>

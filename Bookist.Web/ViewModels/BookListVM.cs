@@ -1,4 +1,4 @@
-﻿using Bookist.Web.Models;
+﻿using Bookist.Web.Entities;
 
 namespace Bookist.Web.ViewModels;
 

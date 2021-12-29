@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Bookist.Web.Models;
+namespace Bookist.Web.Entities;
 
 public class BookistDbContext : DbContext
 {

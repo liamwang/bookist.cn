@@ -1,4 +1,4 @@
-using Bookist.Web.Models;
+using Bookist.Web.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +18,7 @@ builder.Services
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddAntDesign();
 
 var app = builder.Build();
 
