@@ -1,10 +1,17 @@
 ﻿@page "/admin"
 @page "/admin/books"
-@inject BookService bookService
+@inject NavigationManager NavManager
+@inject BookService BookService
 
 <PageTitle>书箱管理</PageTitle>
+
 <Card>
-    <Table Bordered TItem=Book DataSource=PageData.List Total=PageData.Total OnPageIndexChange=OnPageIndexChange>
+    <div style="margin-bottom:15px;">
+        <Input Placeholder="书名/作者" @bind-Value="@keyword" Style="width:240px" />
+        <Button Type="@ButtonType.Primary">搜索</Button>
+        <Button Style="float:right" Icon="@IconType.Outline.Plus" OnClick=@(_=>OpenEditor())>添加</Button>
+    </div>
+    <Table Bordered TItem=Book DataSource=pageData.List Total=pageData.Total OnPageIndexChange=OnPageIndexChange>
         <Column @bind-Field="@context.Cover" Align="ColumnAlign.Center">
             <div style="margin:-16px;"><img src="@context.Cover" alt="" style="height:40px" /></div>
         </Column>
@@ -30,10 +37,21 @@
     </Table>
 </Card>
 
-@code {
-    const int PageSize = 8;
+<div class="edit-drawer">
+    <Drawer Closable="true" Width="720" Visible="@editorVisible" Title="@(currentId==0?"添加书籍":"编辑书籍")" OnClose="CloseEditor">
+        <BookEditForm OnFinish="OnEditFinish" OnCancel="CloseEditor" />
+    </Drawer>
+</div>
 
-    PagedResult<Book> PageData = new();
+@code {
+    const int PAGE_SIZE = 8;
+
+    string keyword;
+
+    int currentId = 0;
+    bool editorVisible = false;
+
+    PagedResult<Book> pageData = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -42,11 +60,28 @@
 
     async Task QueryDataAsync(int page = 1)
     {
-        PageData = await bookService.GetPageAsync(page,PageSize);
+        pageData = await BookService.GetPageAsync(page, PAGE_SIZE);
     }
 
     async Task OnPageIndexChange(PaginationEventArgs args)
     {
         await QueryDataAsync(args.Page);
+    }
+
+    void OpenEditor(int id = 0)
+    {
+        currentId = id;
+        editorVisible = true;
+    }
+
+    void CloseEditor()
+    {
+        editorVisible = false;
+    }
+
+    async Task OnEditFinish()
+    {
+        editorVisible = false;
+        await QueryDataAsync(pageData.Page);
     }
 }

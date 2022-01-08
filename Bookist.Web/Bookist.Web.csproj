@@ -8,8 +8,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Pages\Admin\Books\Index.razor.css" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Pages\Admin\Books\Index.razor.css" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="AntDesign" Version="0.10.3.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
@@ -17,7 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Bookist\Bookist.csproj" />
+		<ProjectReference Include="..\Bookist\Bookist.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,0 +1,24 @@
+﻿.edit-drawer ::deep .ant-drawer-body {
+    padding: 0;
+}
+
+.edit-drawer ::deep .edit-form {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 56px);
+    overflow: auto;
+}
+
+.edit-drawer ::deep .edit-form-body {
+    flex: 1;
+    padding: 30px;
+}
+
+.edit-drawer ::deep .edit-form-footer {
+    padding: 10px 20px;
+    border-top: #eee 1px solid;
+}
+
+.edit-drawer ::deep .edit-form-footer .ant-btn {
+    margin-right: 15px;
+}

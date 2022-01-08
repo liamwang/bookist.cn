@@ -1,0 +1,128 @@
+﻿@inject BookService BookService
+@inject MessageService Message
+
+<div class="edit-form">
+    <div class="edit-form-body">
+        <Form @ref="form" Model="@model" Layout="@FormLayout.Vertical" OnFinish="OnFormFinish" OnFinishFailed="OnFormFailed">
+            <FormItem Label="标题">
+                <Input @bind-Value="@context.Title" />
+            </FormItem>
+            <Row Gutter="16">
+                <Col Span="12">
+                <FormItem Label="作者">
+                    <Input @bind-Value="@context.Author" />
+                </FormItem>
+                </Col>
+                <Col Span="12">
+                <FormItem Label="出版年月">
+                    <DatePicker TValue="DateTime?" Picker="@DatePickerType.Month" @bind-Value="@context.PubDate" Style="width:100%" />
+                </FormItem>
+                </Col>
+            </Row>
+            <FormItem Label="获取地址">
+                <Input @bind-Value="@context.FetchUrl" />
+            </FormItem>
+            <Row Gutter="16">
+                <Col Span="12">
+                <FormItem Label="提取码">
+                    <Input @bind-Value="@context.FetchCode" />
+                </FormItem>
+                </Col>
+                <Col Span="12">
+                <FormItem Label="文件格式">
+                    <Select Mode="default"
+                            DataSource="@formatOptions"
+                            @bind-Value="@context.Format">
+                    </Select>
+                </FormItem>
+                </Col>
+            </Row>
+            <FormItem Label="介绍">
+                <TextArea @bind-Value="@context.Description" />
+            </FormItem>
+
+            <Upload Action="https://www.mocky.io/v2/5cc8019d300000980a055e76" Name="avatar" Class="avatar-uploader"
+                    ListType="picture-card" ShowUploadList="false" BeforeUpload="BeforeUpload" OnChange="HandleChange">
+                @if (!string.IsNullOrWhiteSpace(context.Cover))
+                {
+                    <img src="@context.Cover" alt="avatar" />
+                }
+                else
+                {
+                    <div>
+                        <Icon Spin="uploading" Type="@(uploading?"Loading":"plus")"></Icon>
+                        <div className="ant-upload-text">上传封面</div>
+                    </div>
+                }
+            </Upload>
+        </Form>
+    </div>
+    <div class="edit-form-footer">
+        <Button Size="@ButtonSize.Large" Type="@ButtonType.Primary" HtmlType="submit" OnClick="HandleSubmit">提交</Button>
+        <Button Size="@ButtonSize.Large" OnClick="@(()=>{OnCancel.InvokeAsync();})">取消</Button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback OnFinish { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    AntDesign.Form<BookEditModel> form;
+
+    BookEditModel model = new();
+
+    void OnFormFinish(EditContext editContext)
+    {
+    }
+
+    void OnFormFailed(EditContext editContext)
+    {
+    }
+
+    string imageUrl;
+    bool uploading = false;
+
+    string[] formatOptions = new[] { "PDF", "AZW3", "EPUB", "MOBI", "ZIP", "其它" };
+    //FormValidationRule[] urlRules = new[]{
+    //    new FormValidationRule { Required = true, Pattern = "^(https?:)", Message = "请输入正确的地址" },
+    //};
+
+    async Task HandleSubmit()
+    {
+        Console.WriteLine("1234321");
+        Console.WriteLine(model.PubDate);
+        if (!form.Validate())
+            return;
+        Console.WriteLine("1111");
+        await OnFinish.InvokeAsync();
+    }
+
+    bool BeforeUpload(UploadFileItem file)
+    {
+        var isJpgOrPng = file.Type == "image/jpeg" || file.Type == "image/png";
+        if (!isJpgOrPng)
+        {
+            Message.Error("You can only upload JPG/PNG file!");
+        }
+        var isLt2M = file.Size / 1024 / 1024 < 2;
+        if (!isLt2M)
+        {
+            Message.Error("Image must smaller than 2MB!");
+        }
+        return isJpgOrPng && isLt2M;
+    }
+
+    void HandleChange(UploadInfo fileinfo)
+    {
+        uploading = fileinfo.File.State == UploadState.Uploading;
+
+        if (fileinfo.File.State == UploadState.Success)
+        {
+            imageUrl = fileinfo.File.ObjectURL;
+        }
+        InvokeAsync(StateHasChanged);
+    }
+}
