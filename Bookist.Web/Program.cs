@@ -35,9 +35,9 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute("home", "",
-        new { controller = "Home", Action = "Index", page = 1 });
-    endpoints.MapControllerRoute("page", "page/{page}",
-        new { Controller = "Home", Action = "Index" });
+        new { controller = "Home", Action = "Index", pageNo = 1 });
+    endpoints.MapControllerRoute("page", "page/{pageNo:int}",
+        new { Controller = "Home", Action = "Index"});
     endpoints.MapDefaultControllerRoute();
 
     endpoints.MapBlazorHub();

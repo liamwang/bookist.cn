@@ -13,17 +13,17 @@ public class HomeController : Controller
         _bookService = bookService;
     }
 
-    public async Task<ViewResult> Index(int page = 1, int size = 5)
+    public async Task<ViewResult> Index(int pageNo = 1, int pageSize = 5)
     {
         var pageData = await _bookService
-            .GetPageAsync(page, size);
+            .GetPageAsync(pageNo, pageSize);
         BookListVM vm = new()
         {
             Books = pageData.List,
             Pager = new()
             {
-                Page = page,
-                Size = size,
+                PageNo = pageNo,
+                PageSize = pageSize,
                 TotalItems = pageData.Total
             }
         };

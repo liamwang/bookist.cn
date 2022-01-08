@@ -29,26 +29,26 @@ public class PagerTagHelper : TagHelper
     {
         IUrlHelper urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
 
-        TagBuilder CreatePageButton(int page, string text)
+        TagBuilder CreatePageButton(int pageNo, string text)
         {
             TagBuilder tag = new("a");
             tag.AddCssClass("btn btn-outline-primary me-3");
-            tag.Attributes["href"] = urlHelper.Action(PageAction, PageController, new { page });
+            tag.Attributes["href"] = urlHelper.Action(PageAction, PageController, new { pageNo });
             tag.InnerHtml.Append(text);
             return tag;
         }
 
         TagBuilder textTag = new("div");
         textTag.AddCssClass("my-3");
-        textTag.InnerHtml.Append($"第 {PageModel.Page} 页，共 {PageModel.TotalPages} 页");
+        textTag.InnerHtml.Append($"第 {PageModel.PageNo} 页，共 {PageModel.TotalPages} 页");
         output.Content.AppendHtml(textTag);
 
         TagBuilder btnsTag = new("div");
         btnsTag.AddCssClass("my-3");
 
         var firstBtn = CreatePageButton(1, "最新");
-        var prevBtn = CreatePageButton(PageModel.Page - 1, "上一页");
-        if (PageModel.Page == 1)
+        var prevBtn = CreatePageButton(PageModel.PageNo - 1, "上一页");
+        if (PageModel.PageNo == 1)
         {
             firstBtn.AddCssClass("disabled");
             prevBtn.AddCssClass("disabled");
@@ -56,9 +56,9 @@ public class PagerTagHelper : TagHelper
         btnsTag.InnerHtml.AppendHtml(firstBtn);
         btnsTag.InnerHtml.AppendHtml(prevBtn);
 
-        var nextBtn = CreatePageButton(PageModel.Page + 1, "下一页");
+        var nextBtn = CreatePageButton(PageModel.PageNo + 1, "下一页");
         var lastBtn = CreatePageButton(PageModel.TotalPages, "最旧");
-        if (PageModel.Page == PageModel.TotalPages)
+        if (PageModel.PageNo == PageModel.TotalPages)
         {
             nextBtn.AddCssClass("disabled");
             lastBtn.AddCssClass("disabled");
