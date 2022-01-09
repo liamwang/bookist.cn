@@ -2,28 +2,29 @@
 node_modules
 
 # build results
-dist/
-bin/
-obj/
-[Dd]ebug/
-[Rr]elease/
-[Rr]eleases/
-unpackage/
-temp/
+dist
+dist-ssr
+bin
+obj
+[Dd]ebug
+[Rr]elease
+[Rr]eleases
+unpackage
+temp
 
 # local env files
-packages/
+packages
+.local
 .env.local
 .env.*.local
-package-lock.json
+.eslintcache
+.cache
+.npmrc
 
 # log files
-[Ll]og/
-[Ll]ogs/
+[Ll]og
+[Ll]ogs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # editor directories and files
 .idea

@@ -1,0 +1,31 @@
+{
+  "name": "bookist-admin",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "chcp 65001 && concurrently \"npm:dev:admin\" \"npm:dev:server\" ",
+    "dev:admin": "vite --open",
+    "dev:server": "dotnet run --watch --project server/Bookist.Web",
+    "build": "rimraf release && yarn build:server && yarn build:admin && open-cli release",
+    "build:admin": "vue-tsc --noEmit && vite build",
+    "build:server": "dotnet publish server/Bookist.Web -c Release -o release",
+    "restore": "yarn install && dotnet restore server/Bookist.sln",
+    "preview": "dotnet release/Bookist.Web.dll --urls=http://localhost:5000",
+    "dotnet": "cd server/Bookist.Web && dotnet",
+    "db:add": "yarn dotnet ef migrations add",
+    "db:script": "yarn dotnet ef migrations script -o script/db.sql"
+  },
+  "dependencies": {
+    "vue": "^3.2.25"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.0.1",
+    "concurrently": "^7.0.0",
+    "open-cli": "^7.0.1",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.5.4",
+    "vite": "^2.7.10",
+    "vue-tsc": "^0.30.2"
+  }
+}
