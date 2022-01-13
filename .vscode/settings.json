@@ -8,11 +8,15 @@
   },
   "files.exclude": {
     "**/.vs": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/yarn.lock": true,
     "**/bin": true,
     "**/obj": true,
     "**/release": true,
-    "**/node_modules": true,
-    "**/dist": true,
     "**/*.csproj.user": true
+  },
+  "files.associations": {
+    "appsettings*.json": "jsonc"
   }
 }

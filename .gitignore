@@ -17,6 +17,7 @@ packages
 .local
 .env.local
 .env.*.local
+*.[Ll]ocal.json
 .eslintcache
 .cache
 .npmrc

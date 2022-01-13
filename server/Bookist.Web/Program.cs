@@ -1,10 +1,13 @@
 using Bookist;
 using Bookist.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
+config.AddJsonFile("appsettings.Local.json", true, true);
 
 // 注册服务
 
@@ -22,7 +25,7 @@ builder.Services.AddTransient<BookService>();
 var app = builder.Build();
 
 // 注册中间件
-
+app.UseDefaultFiles();
 app.UseStaticFiles();
 app.UseRouting();
 

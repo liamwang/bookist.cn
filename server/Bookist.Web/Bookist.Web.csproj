@@ -19,4 +19,9 @@
 		<ProjectReference Include="..\Bookist\Bookist.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
+		<Content Update="appsettings.Local.json" CopyToPublishDirectory="Never" />
+	</ItemGroup>
+
 </Project>

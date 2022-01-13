@@ -11,5 +11,5 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"]
   },
-  "include": ["admin/**/*.ts", "admin/**/*.d.ts", "admin/**/*.tsx", "admin/**/*.vue"]
+  "include": ["client/**/*.ts", "client/**/*.d.ts", "client/**/*.tsx", "client/**/*.vue"]
 }

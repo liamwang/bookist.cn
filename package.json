@@ -2,30 +2,42 @@
   "name": "bookist-admin",
   "version": "0.0.0",
   "license": "MIT",
+  "author": {
+    "name": "liam",
+    "email": "laim.wang@live.com",
+    "url": "https://github.com/liamwang"
+  },
   "scripts": {
     "dev": "chcp 65001 && concurrently \"npm:dev:admin\" \"npm:dev:server\" ",
     "dev:admin": "vite --open",
-    "dev:server": "dotnet run --watch --project server/Bookist.Web",
+    "dev:server": "dotnet watch run --project server/Bookist.Web",
     "build": "rimraf release && yarn build:server && yarn build:admin && open-cli release",
     "build:admin": "vue-tsc --noEmit && vite build",
-    "build:server": "dotnet publish server/Bookist.Web -c Release -o release",
+    "build:server": "dotnet publish server/Bookist.Web -p:PublishProfile=FolderProfile --no-restore",
     "restore": "yarn install && dotnet restore server/Bookist.sln",
-    "preview": "dotnet release/Bookist.Web.dll --urls=http://localhost:5000",
+    "preview": "cd release && dotnet Bookist.Web.dll --urls=http://localhost:5000",
     "dotnet": "cd server/Bookist.Web && dotnet",
     "db:add": "yarn dotnet ef migrations add",
     "db:script": "yarn dotnet ef migrations script -o script/db.sql"
   },
   "dependencies": {
-    "vue": "^3.2.25"
+    "@ant-design/icons-vue": "^6.0.1",
+    "ant-design-vue": "^2.2.8",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.1",
+    "@vitejs/plugin-vue-jsx": "^1.3.3",
+    "@vue/compiler-sfc": "^3.2.26",
     "concurrently": "^7.0.0",
+    "less": "^4.1.2",
     "open-cli": "^7.0.1",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.5.4",
     "vite": "^2.7.10",
+    "vite-plugin-style-import": "^1.4.1",
     "vue-tsc": "^0.30.2"
   }
 }
