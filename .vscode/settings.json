@@ -18,5 +18,6 @@
   },
   "files.associations": {
     "appsettings*.json": "jsonc"
-  }
+  },
+  "vssolution.altSolutionFolders": ["server"]
 }

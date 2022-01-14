@@ -1,3 +1,9 @@
 {
-  "recommendations": ["johnsoncodehk.volar"]
+  "recommendations": [
+    "ms-dotnettools.csharp",
+    "johnsoncodehk.volar",
+    "esbenp.prettier-vscode",
+    "jmrog.vscode-nuget-package-manager",
+    "dbaeumer.vscode-eslint"
+  ]
 }
