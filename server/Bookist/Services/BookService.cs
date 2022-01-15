@@ -1,5 +1,6 @@
-﻿using Bookist.Entities;
-using Bookist.Models;
+﻿using Anet;
+using Bookist.Entities;
+using Bookist.Inernal;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookist.Services;
@@ -14,7 +15,7 @@ public class BookService : ServiceBase<AppDbContext, Book>
     {
         return new PagedResult<Book>(page, size)
         {
-            List = await Entities.AsNoTracking()
+            Items = await Entities.AsNoTracking()
                 .OrderByDescending(x => x.Id)
                 .Page(page, size)
                 .ToListAsync(),

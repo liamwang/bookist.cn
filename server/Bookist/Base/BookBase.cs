@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Bookist.Models;
+namespace Bookist.Base;
 
 public abstract class BookBase
 {

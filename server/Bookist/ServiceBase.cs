@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Bookist;
+namespace Bookist.Inernal;
 
 public abstract class ServiceBase<TDbContext, TEntity>
     where TDbContext : DbContext

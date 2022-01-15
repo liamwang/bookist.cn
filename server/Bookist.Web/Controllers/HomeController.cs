@@ -19,7 +19,7 @@ public class HomeController : Controller
             .GetPageAsync(pageNo, pageSize);
         BookListVM vm = new()
         {
-            Books = pageData.List,
+            Books = pageData.Items,
             Pager = new()
             {
                 PageNo = pageNo,
