@@ -1,7 +1,6 @@
-using Bookist;
 using Bookist.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -10,11 +9,10 @@ config.AddJsonFile("appsettings.Local.json", true, true);
 // 注册服务
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<AppDbContext>(opt =>
-{
-    var conStr = config.GetConnectionString("BookistConnection");
-    opt.UseMySql(conStr, ServerVersion.AutoDetect(conStr));
-});
+
+builder.Services.AddAnet()
+    .AddDb<MySqlConnection>(config.GetConnectionString("BookistConnection"));
+
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(x => x.LoginPath = "/account/login");

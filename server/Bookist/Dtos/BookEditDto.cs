@@ -2,7 +2,7 @@
 
 namespace Bookist.Dtos;
 
-public class BookDto : BookBase
+public class BookEditDto : BookBase
 {
 }
 

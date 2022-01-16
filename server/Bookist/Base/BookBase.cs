@@ -6,11 +6,11 @@ namespace Bookist.Base;
 public abstract class BookBase
 {
     [DisplayName("名称")]
-    [Required(ErrorMessage ="名称为不能为空"), MaxLength(100)]
+    [Required, MaxLength(100)]
     public string Title { get; set; }
 
     [DisplayName("封面")]
-    [Required(ErrorMessage ="封面不能为空"), MaxLength(255)]
+    [Required, MaxLength(255)]
     public string Cover { get; set; }
 
     [DisplayName("作者")]
@@ -25,11 +25,11 @@ public abstract class BookBase
     public string Description { get; set; }
 
     [DisplayName("文件格式")]
-    [Required(ErrorMessage = "文件格式不能为空"), MaxLength(50)]
+    [Required, MaxLength(50)]
     public string Format { get; set; }
 
     [DisplayName("提取链接")]
-    [Required(ErrorMessage = "提取链接不能为空"), MaxLength(100)]
+    [Required, MaxLength(100)]
     public string FetchUrl { get; set; }
 
     [DisplayName("提取码")]
