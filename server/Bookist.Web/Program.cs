@@ -1,3 +1,4 @@
+using Anet.Data;
 using Bookist.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MySqlConnector;
@@ -11,7 +12,7 @@ config.AddJsonFile("appsettings.Local.json", true, true);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAnet()
-    .AddDb<MySqlConnection>(config.GetConnectionString("BookistConnection"));
+    .AddDb<MySqlConnection>(DbDialect.MySQL, config.GetConnectionString("BookistConnection"));
 
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

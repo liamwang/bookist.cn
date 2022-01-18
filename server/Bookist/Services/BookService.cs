@@ -2,7 +2,6 @@
 using Anet.Data;
 using Anet.Models;
 using Bookist.Dtos;
-using Bookist.Entities;
 
 namespace Bookist.Services;
 
@@ -14,20 +13,19 @@ public class BookService : ServiceBase<Db>
 
     public async Task<PagedResult<BookDto>> GetAsync(int page, int size, string keyword = null)
     {
-        var sql = new SqlString();
         var param = new SqlParams();
 
-        sql.From("Book").Where();
+        var sql = Db.NewSql().Select("*").From("Book").Where();
         if (!string.IsNullOrEmpty(keyword))
         {
-            sql.Append("AND (Name LIKE @pattern OR Author LIKE @pattern) ");
+            sql.LineTab("AND (Name LIKE @pattern OR Author LIKE @pattern) ");
             param.Add("pattern", $"'%{keyword}'%");
         }
 
         var result = new PagedResult<BookDto>(page, size)
         {
-            Total = await Db.QuerySingleAsync<int>($"SELECT COUNT(1) {sql}", param),
-            Items = await Db.QueryAsync<BookDto>(sql.Select("*").OrderBy("Id", "DESC").Limit(page, size), param),
+            Items = await Db.QueryAsync<BookDto>(sql.OrderByDesc("Id").Page(page, size), param),
+            Total = await Db.QuerySingleAsync<int>(sql.DePage().Count(), param),
         };
 
         return result;

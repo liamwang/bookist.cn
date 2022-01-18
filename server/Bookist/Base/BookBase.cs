@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bookist.Base;
 
@@ -18,7 +19,8 @@ public abstract class BookBase
     public string Author { get; set; }
 
     [DisplayName("出版年月")]
-    public DateOnly PubDate { get; set; }
+    [Column(TypeName = "date")]
+    public DateTime PubDate { get; set; }
 
     [DisplayName("描述")]
     [MaxLength(2000)]
