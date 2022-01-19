@@ -1,0 +1,40 @@
+.SiderMenu {
+  &-Logo {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 14px;
+    > img {
+      height: 28px;
+      display: inline-block;
+    }
+    > span {
+      display: inline-block;
+      font-size: 17px;
+      white-space: nowrap;
+      vertical-align: middle;
+      margin-left: 8px;
+      letter-spacing: 1px;
+    }
+  }
+
+  &.ant-layout-sider-collapsed &-Logo {
+    justify-content: center;
+    padding-left: 0;
+    > img {
+      height: 32px;
+    }
+  }
+
+  .ant-menu-item,
+  .ant-menu-title-content,
+  .ant-menu-submenu-title {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    line-height: 48px;
+    .anticon {
+      font-size: 16px;
+    }
+  }
+}
