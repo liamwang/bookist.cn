@@ -1,0 +1,130 @@
+<script lang="tsx" setup>
+import { computed, onMounted, reactive } from 'vue'
+import { Table, Button, Popconfirm, Tag } from 'ant-design-vue'
+import type { ColumnProps } from 'ant-design-vue/lib/table'
+import { deleteBook, getBooks } from '../../api/book'
+import useAsync from '../../utils/useAsync'
+
+const emit = defineEmits<{
+  (e: 'editClick', id: number): void
+}>()
+
+const { run, loading } = useAsync()
+
+const data = reactive<any>({})
+
+const pagination = computed(() => ({
+  total: data.total,
+  current: data.page,
+  pageSize: data.size,
+}))
+
+const query = async (params = {}) => {
+  const result = await run(getBooks({ page: 1, size: 10, ...params }))
+  Object.assign(data, result)
+}
+defineExpose({ query })
+
+const handleTableChange = ({ current }: any) => {
+  query({ page: current })
+}
+
+const handleDelete = async (id: number) => {
+  await run(deleteBook(id))
+  query()
+}
+
+onMounted(() => {
+  query()
+})
+
+const columns: ColumnProps[] = [
+  {
+    title: '封面',
+    dataIndex: 'coverUrlSm',
+    width: 80,
+    customRender: (r: any) => <img src={r.text} style="height:55px" />,
+  },
+  {
+    title: '书名',
+    dataIndex: 'name',
+    // ellipsis: true,
+    width: 320,
+  },
+  {
+    title: '作者',
+    dataIndex: 'author',
+    width: 120,
+    ellipsis: true,
+  },
+  {
+    title: '出版年月',
+    dataIndex: 'pubDateStr',
+    width: 100,
+    align: 'center',
+  },
+  {
+    title: '标签',
+    dataIndex: 'tags',
+    width: 140,
+    customRender: ({ record }: any) => (
+      <>
+        {record.tagArr?.map((t: string) => (
+          <Tag>{t}</Tag>
+        ))}
+      </>
+    ),
+  },
+  {
+    title: '文件格式',
+    dataIndex: 'formats',
+    width: 120,
+  },
+  {
+    title: '下载连接',
+    dataIndex: 'fetchUrl',
+    width: 100,
+    align: 'center',
+    customRender: ({ text }: any) => (
+      <a href={text} target="_blank">
+        点击打开
+      </a>
+    ),
+  },
+  {
+    title: '提取码',
+    dataIndex: 'fetchCode',
+    width: 100,
+    align: 'center',
+  },
+  {
+    title: '操作',
+    dataIndex: 'operation',
+    width: 135,
+    align: 'center',
+    customRender: ({ record }: any) => (
+      <>
+        <Button size="small" onClick={() => emit('editClick', record.id)} style="margin-right:5px">
+          编辑
+        </Button>
+        <Popconfirm title="确定要删除吗？" onConfirm={() => handleDelete(record.id)}>
+          <Button size="small" type="dashed">
+            删除
+          </Button>
+        </Popconfirm>
+      </>
+    ),
+  },
+]
+</script>
+
+<template>
+  <Table
+    row-key="id"
+    :columns="columns"
+    :data-source="data.items"
+    :pagination="pagination"
+    :loading="loading"
+    @change="handleTableChange"
+  />
+</template>

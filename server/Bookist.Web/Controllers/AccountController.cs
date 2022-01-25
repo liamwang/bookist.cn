@@ -1,14 +1,14 @@
-﻿using Bookist.Web.Models;
+﻿using System.Security.Claims;
+using Bookist.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Bookist.Web.Controllers;
 
 public class AccountController : Controller
 {
-    public IActionResult Login(string returnUrl = "/admin")
+    public IActionResult Login(string returnUrl = "/admin/")
     {
         LoginVM vm = new()
         {

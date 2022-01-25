@@ -9,6 +9,7 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "noImplicitAny": false,
     "lib": ["esnext", "dom"]
   },
   "include": ["client/**/*.ts", "client/**/*.d.ts", "client/**/*.tsx", "client/**/*.vue"]

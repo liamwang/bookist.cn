@@ -25,6 +25,7 @@ export default defineConfig({
   server: {
     proxy: {
       '^/(?!admin)': 'http://localhost:5000',
+      '^/api': 'http://localhost:5000/api',
     },
   },
   css: {

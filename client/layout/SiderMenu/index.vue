@@ -13,7 +13,7 @@ import { Layout } from 'ant-design-vue'
 
 import Menu from './Menu'
 import Logo from './Logo.vue'
-import { menuCollapsed } from '../../store/app'
+import { menuCollapsed } from '../../store'
 
 export default defineComponent({
   components: { LayoutSider: Layout.Sider, Logo, Menu },

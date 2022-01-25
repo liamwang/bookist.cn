@@ -5,11 +5,11 @@
     <div class="card mb-4 p-1 bg-white">
         <div class="d-md-flex">
             <div class="cover me-md-4">
-                <img src="@book.Cover" alt="">
+                <img src="@book.CoverUrl" alt="">
             </div>
             <div class="d-flex flex-column">
                 <div class="flex-grow-1">
-                    <h3 class="h5 ellipsis my-2">@book.Title</h3>
+                    <h3 class="h5 ellipsis my-2">@book.Name</h3>
                     <div class="my-2">
                         <span class="me-1">作者:</span>
                         <span>@book.Author</span>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="my-2">
-                    <a href="@book.FetchUrl" target="_blank" class="btn btn-primary me-2">下载 @book.Format</a>
+                    <a href="@book.FetchUrl" target="_blank" class="btn btn-primary me-2">下载 @book.Formats</a>
                     @if (!string.IsNullOrEmpty(book.FetchCode))
                     {
                         <span>提取码：<b class="book-card__code">@book.FetchCode</b></span>

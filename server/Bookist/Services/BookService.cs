@@ -1,24 +1,122 @@
-﻿using Bookist.Entities;
-using Bookist.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Anet;
+using Anet.Data;
+using Anet.Models;
+using Bookist.Dtos;
+using Bookist.Entities;
+using Mapster;
 
 namespace Bookist.Services;
 
-public class BookService : ServiceBase<AppDbContext, Book>
+public class BookService : ServiceBase<Db>
 {
-    public BookService(AppDbContext db) : base(db)
+    public BookService(Db db) : base(db)
     {
+        db.Connection.Open();
     }
 
-    public async Task<PagedResult<Book>> GetPageAsync(int page, int size)
+    public async Task<PagedResult<BookDto>> GetAsync(int page, int size, string keyword = null)
     {
-        return new PagedResult<Book>(page, size)
+        var param = new SqlParams();
+
+        var sql_ = Db.NewSql().From("Book").Where();
+        if (!string.IsNullOrEmpty(keyword))
         {
-            List = await Entities.AsNoTracking()
-                .OrderByDescending(x => x.Id)
-                .Page(page, size)
-                .ToListAsync(),
-            Total = await Entities.CountAsync()
+            sql_.Line("AND (Name LIKE @pattern OR Author LIKE @pattern)");
+            param.Add("pattern", $"%{keyword}%");
+        }
+
+        var result = new PagedResult<BookDto>(page, size)
+        {
+            Total = await Db.SingleAsync<int>(sql_.Select("COUNT(1)"), param),
+            Items = await Db.QueryAsync<BookDto>(
+                sql_.Select("*").Order("Id DESC").Page(page, size), param),
         };
+
+        sql_.Clear()
+            .Line("SELECT * FROM BookTag BT")
+            .Line("LEFT JOIN Tag T ON T.Id=BT.TagId")
+            .Line("WHERE BT.BookId IN @bookIds");
+        var bookTags = await Db.QueryAsync<BookTag, Tag, BookTag>(sql_,
+            (bookTag, tag) =>
+            {
+                bookTag.Tag = tag;
+                return bookTag;
+            },
+            new { bookIds = result.Items.Select(x => x.Id) });
+
+        foreach (var book in result.Items)
+        {
+            book.Tags = bookTags.Where(x => x.BookId == book.Id).Select(x => x.Tag);
+        }
+
+        return result;
+    }
+
+    public async Task<BookDto> GetByIdAsync(long id, bool includeLinks = false)
+    {
+        var sql_ = Db.NewSql();
+
+        sql_.Line("SELECT * FROM Book WHERE Id=@id");
+        var book = await Db.FirstOrDefaultAsync<BookDto>(sql_, new { id });
+
+        NotFoundException.ThrowIf(book == null);
+
+        sql_.Clear();
+        sql_.Line("SELECT T.*")
+            .Line("FROM BookTag BT")
+            .Line("LEFT JOIN Tag T ON T.Id=BT.TagId")
+            .Line("WHERE BT.BookId=@id");
+        book.Tags = await Db.QueryAsync<Tag>(sql_, new { id });
+
+        return book;
+    }
+
+    public async Task SaveAsync(BookEditDto dto)
+    {
+        using var tran = Db.BeginTransaction();
+
+        // Handle Books
+        Book book;
+        if (dto.Id == 0)
+        {
+            book = dto.Adapt<Book>();
+            await Db.InsertAsync(book);
+        }
+        else
+        {
+            book = await Db.FindAsync<Book>(new { dto.Id });
+            dto.Adapt(book);
+            await Db.UpdateAsync(book);
+        }
+
+        // Handle Tags
+        var existTags = Db.Query<Tag>(
+            "SELECT * FROM Tag WHERE Name IN @Tags", new { dto.Tags });
+        var newTags = dto.Tags
+            .Where(x => !existTags.Any(y => y.Name == x))
+            .Select(x => new Tag { Name = x }).ToArray();
+        foreach (var tag in newTags)
+        {
+            tag.Id = IdGen.NewId();
+            tag.Slug = UrlUtil.ParseSlug(tag.Name, tag.Id);
+        }
+        await Db.InsertBatchAsync(newTags);
+
+        // Handle BookTags
+        var bookTags = existTags.Concat(newTags)
+            .Select(x => new BookTag { BookId = book.Id, TagId = x.Id });
+        await Db.DeleteAsync<BookTag>(new { BookId = dto.Id });
+        await Db.InsertBatchAsync(bookTags);
+
+        tran.Commit();
+    }
+
+    public async Task DeleteAsync(long id)
+    {
+        var rows = await Db.DeleteAsync("Book", new { Id = id });
+        if (rows == 0)
+        {
+            throw new NotFoundException();
+        }
     }
 }

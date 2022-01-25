@@ -1,11 +1,13 @@
 <template>
   <Layout class="AppLayout">
     <SiderMenu />
-    <Layout>
+    <Layout style="height: 100pv; overflow: auto">
       <HeaderBar />
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in" appear>
-          <component :is="Component" />
+          <div class="content-body">
+            <component :is="Component" />
+          </div>
         </transition>
       </router-view>
     </Layout>
@@ -33,6 +35,9 @@ export default defineComponent({
 <style lang="less">
 .AppLayout {
   height: 100%;
+  .content-body {
+    padding: 15px;
+  }
 }
 
 .fade-enter-active,

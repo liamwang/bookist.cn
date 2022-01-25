@@ -1,0 +1,28 @@
+@model BookListVM
+
+<div class="row">
+    @foreach (var item in Model.Books)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card mb-4 text-center border-0">
+                <a asp-controller="Book" asp-route-id="@item.Id" class="card-img-top">
+                    <img src="@UrlUtil.Thumb(item.Cover)" alt="@item.Name">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title ellipsis">
+                        <a  asp-controller="Book" asp-route-id="@item.Id" class="text-decoration-none">@item.Name</a>
+                    </h5>
+                    <div class="text-nowrap overflow-hidden">
+                        @foreach (var tag in item.Tags)
+                        {
+                            <a asp-controller="Tag" asp-route-id="@tag.Id" class="badge badge-light">@tag.Name</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="text-center" page-model="@Model.Pager" page-controller="Home" page-action="Index"></div>
+

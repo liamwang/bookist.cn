@@ -2,8 +2,10 @@ import Content from './Content'
 
 import {
   Button,
-  // Optional
   // Select,
+  // Table,
+  // Optional
+
   // Alert,
   // Checkbox,
   // DatePicker,
@@ -14,7 +16,7 @@ import {
   // Tabs,
   // Descriptions,
   // Tree,
-  // Table,
+
   // Divider,
   // Modal,
   // Drawer,
@@ -49,38 +51,39 @@ export function regGlobalComponents(app: App) {
   })
 
   app.use(Button)
-  //   .use(Select)
-  //   .use(Alert)
-  //   .use(Breadcrumb)
-  //   .use(Checkbox)
-  //   .use(DatePicker)
-  //   .use(Radio)
-  //   .use(Switch)
-  //   .use(Card)
-  //   .use(List)
-  //   .use(Descriptions)
-  //   .use(Tree)
-  //   .use(Table)
-  //   .use(Divider)
-  //   .use(Modal)
-  //   .use(Drawer)
-  //   .use(Dropdown)
-  //   .use(Tag)
-  //   .use(Tooltip)
-  //   .use(Badge)
-  //   .use(Popover)
-  //   .use(Upload)
-  //   .use(Transfer)
-  //   .use(Steps)
-  //   .use(PageHeader)
-  //   .use(Result)
-  //   .use(Empty)
-  //   .use(Avatar)
-  //   .use(Menu)
-  //   .use(Tabs)
-  //   .use(Form)
-  //   .use(Input)
-  //   .use(Row)
-  //   .use(Col)
-  //   .use(Spin);
+  // .use(Select)
+  // .use(Table)
+  // .use(Alert)
+  // .use(Breadcrumb)
+  // .use(Checkbox)
+  // .use(DatePicker)
+  // .use(Radio)
+  // .use(Switch)
+  // .use(Card)
+  // .use(List)
+  // .use(Descriptions)
+  // .use(Tree)
+
+  // .use(Divider)
+  // .use(Modal)
+  // .use(Drawer)
+  // .use(Dropdown)
+  // .use(Tag)
+  // .use(Tooltip)
+  // .use(Badge)
+  // .use(Popover)
+  // .use(Upload)
+  // .use(Transfer)
+  // .use(Steps)
+  // .use(PageHeader)
+  // .use(Result)
+  // .use(Empty)
+  // .use(Avatar)
+  // .use(Menu)
+  // .use(Tabs)
+  // .use(Form)
+  // .use(Input)
+  // .use(Row)
+  // .use(Col)
+  // .use(Spin);
 }

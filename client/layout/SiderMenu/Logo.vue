@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { menuCollapsed } from '../../store/app'
+import { menuCollapsed } from '../../store'
 import logo from '../../assets/logo.png'
 
 export default defineComponent({

@@ -1,33 +1,53 @@
+using Anet.Data;
 using Bookist;
 using Bookist.Services;
+using Bookist.Web;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var config = builder.Configuration;
 config.AddJsonFile("appsettings.Local.json", true, true);
 
+var cnn = config.GetConnectionString("BookistConnection");
+
+Mapping.Config();
+
 // 注册服务
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<AppDbContext>(opt =>
-{
-    var conStr = config.GetConnectionString("BookistConnection");
-    opt.UseMySql(conStr, ServerVersion.AutoDetect(conStr));
-});
+builder.Services
+    .AddAnet(opt => opt.EnableDefaultIdGen(0, 1, 8))
+    .AddDb<MySqlConnection>(DbDialect.MySQL, cnn, opt =>
+    {
+        opt.EnableMetrics = true;
+        opt.LogSensitiveData = true;
+    })
+    .AddApi(withViews: true);
+
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(x => x.LoginPath = "/account/login");
+    .AddCookie(opt =>
+    {
+        opt.LoginPath = "/account/login";
+        opt.Events = new CookieAuthEvents();
+    });
+
 builder.Services.AddTransient<BookService>();
+builder.Services.AddTransient<TagService>();
+
+builder.Services.Configure<QiniuOptions>(config.GetSection("Qiniu"));
+builder.Services.AddTransient<QiniuService>();
 
 var app = builder.Build();
 
 // 注册中间件
+
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAnetExceptionHandler("/api");
 
 app.UseAuthentication();
 app.UseAuthorization();

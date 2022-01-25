@@ -17,7 +17,7 @@ import { defineComponent } from 'vue'
 import { Dropdown, Menu } from 'ant-design-vue'
 import { PoweroffOutlined, KeyOutlined } from '@ant-design/icons-vue'
 
-import { userInfo } from '../store/app'
+import { userInfo } from '../store'
 import defaultAvatar from '../assets/avatar.png'
 
 export default defineComponent({
@@ -30,7 +30,7 @@ export default defineComponent({
     KeyOutlined,
   },
   setup() {
-    const handleMenuClick = ({ key }: { key: string }) => {
+    const handleMenuClick = ({ key }: any) => {
       if (key === 'logout') {
         window.location.href = '/account/logout'
       }

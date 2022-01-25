@@ -3,16 +3,11 @@ import { Menu } from 'ant-design-vue'
 
 import router from '../../router'
 import menuData from '../../router/menu'
-import { menuCollapsed, menuPathArray } from '../../store/app'
+import { menuCollapsed, menuPathArray } from '../../store'
 import type { MenuItem, SubMenu } from '../../models/Menu'
 import type MenuModel from '../../models/Menu'
 
-import {
-  isSubMenu,
-  isPathInMenu,
-  getOpenMenuKeys,
-  getMenuPathArray,
-} from './util'
+import { isSubMenu, isPathInMenu, getOpenMenuKeys, getMenuPathArray } from './util'
 
 export default defineComponent({
   setup() {
@@ -50,9 +45,7 @@ export default defineComponent({
     }
 
     function onOpenChange(value: any[]) {
-      const lastOpenKey = value.find(
-        (key) => openKeys.value.indexOf(key) === -1
-      )
+      const lastOpenKey = value.find((key) => openKeys.value.indexOf(key) === -1)
       if (lastOpenKey) {
         setOpenKeys(lastOpenKey)
       } else {
@@ -109,9 +102,7 @@ export default defineComponent({
 
     const renderMenu = (item: MenuModel) => {
       const subMenu = item as SubMenu
-      return subMenu.children
-        ? renderSubMenu(subMenu)
-        : renderMenuItem(item as MenuItem)
+      return subMenu.children ? renderSubMenu(subMenu) : renderMenuItem(item as MenuItem)
     }
 
     return () => (

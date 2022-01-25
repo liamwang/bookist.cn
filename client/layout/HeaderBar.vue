@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
-import { menuCollapsed } from '../store/app'
+import { menuCollapsed } from '../store'
 import UserDropdown from './UserDropdown.vue'
 import Notification from './Notification.vue'
 import Breadcrumb from './Breadcrumb.vue'
@@ -49,10 +49,10 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   height: @header-height;
-  padding: 0;
+  line-height: @header-height;
+  padding: 0 5px 0 0;
   background: #fff;
   border-bottom: 1px solid #eee;
-  padding-right: 5px;
 
   .action {
     display: flex;
