@@ -69,8 +69,8 @@ const columns: ColumnProps[] = [
     width: 140,
     customRender: ({ record }: any) => (
       <>
-        {record.tagArr?.map((t: string) => (
-          <Tag>{t}</Tag>
+        {record.tags?.map((x: any) => (
+          <Tag>{x.name}</Tag>
         ))}
       </>
     ),

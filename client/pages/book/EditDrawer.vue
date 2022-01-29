@@ -17,6 +17,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons-vue'
 import useAsync from '../../utils/useAsync'
 import { getQiniuToken, saveBook, getBookById } from '../../api/book'
 import { getTags } from '../../api/tag'
+import { FormInstance } from 'ant-design-vue/es/form/Form'
 
 const emit = defineEmits<{
   (e: 'finish', data: object): void
@@ -50,6 +51,8 @@ const visible = ref(false)
 
 const uploading = ref(false)
 
+const formRef = ref<FormInstance>()
+
 const tagOptions = ref<any[]>([])
 
 const formatOptions = ['PDF', 'EPUB', 'AZW3', 'MOBI', '压缩包', '文件夹', '源代码'].map((x) => ({
@@ -57,7 +60,14 @@ const formatOptions = ['PDF', 'EPUB', 'AZW3', 'MOBI', '压缩包', '文件夹', 
   label: x,
 }))
 
+const mapTagOptions = (tags: any[]) => tags.map((x: any) => ({ value: x.name, label: x.name }))
+
 const qiniuToken = ref('')
+
+onMounted(async () => {
+  const tags = await run(getTags())
+  tagOptions.value = mapTagOptions(tags)
+})
 
 const beforeUpload = async (file: File) => {
   if (file.size / 1024 / 1024 > 2) {
@@ -87,22 +97,22 @@ const handleUpload = (info: any) => {
 
 const { run, loading } = useAsync()
 
-const handleSubmit = async (values: any) => {
-  const data = toRaw(values)
-  await run(saveBook(values))
+const handleSubmit = async () => {
+  const data = toRaw(form)
+  await run(saveBook(data))
   close()
   emit('finish', data)
 }
 
-const mapTagOptions = (tags: any[]) => tags.map((x: any) => ({ value: x.name, label: x.name }))
-
 const open = async (id = 0) => {
+  formRef.value?.resetFields()
+  form.id = id
+  form.coverUrl = ''
   visible.value = true
   if (id) {
-    form.id = id
     const book = await run(getBookById(id))
     book.formats = book.formats.split('/')
-    book.tags = mapTagOptions(book.tags)
+    book.tags = book.tags.map((x: any) => x.name)
     Object.assign(form, book)
   }
 }
@@ -111,25 +121,20 @@ const close = () => {
   visible.value = false
 }
 
-onMounted(async () => {
-  const tags = await run(getTags())
-  tagOptions.value = mapTagOptions(tags)
-})
-
 defineExpose({ open })
 </script>
 
 <template>
   <Drawer :title="form.id ? '编辑图书' : '新增图书'" :width="720" :visible="visible" @close="close">
     <Spin :spinning="loading">
-      <Form :model="form" :rules="rules" layout="vertical" @finish="handleSubmit">
+      <Form ref="formRef" :model="form" :rules="rules" layout="vertical" @finish="handleSubmit">
         <Form.Item name="cover" style="text-align: center">
           <Upload
             list-type="picture-card"
             class="cover-uploader"
-            :show-upload-list="false"
-            action="//upload.qiniu.com/"
+            action="//upload.qiniup.com"
             name="file"
+            :show-upload-list="false"
             :data="{ token: qiniuToken }"
             :before-upload="beforeUpload"
             @change="handleUpload"
