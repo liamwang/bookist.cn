@@ -13,11 +13,12 @@ import {
   Spin,
   message,
 } from 'ant-design-vue'
+import { FormInstance } from 'ant-design-vue/es/form/Form'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons-vue'
+import IntroEditor from '../../comps/Editor/index.vue'
 import useAsync from '../../utils/useAsync'
 import { getQiniuToken, saveBook, getBookById } from '../../api/book'
 import { getTags } from '../../api/tag'
-import { FormInstance } from 'ant-design-vue/es/form/Form'
 
 const emit = defineEmits<{
   (e: 'finish', data: object): void
@@ -198,7 +199,8 @@ defineExpose({ open })
         <Row :gutter="16">
           <Col :span="24">
             <Form.Item label="介绍" name="intro">
-              <Input.TextArea v-model:value="form.intro" :rows="8" placeholder="" />
+              <!-- <Input.TextArea v-model:value="form.intro" :rows="8" placeholder="" /> -->
+              <IntroEditor v-model="form.intro" />
             </Form.Item>
           </Col>
         </Row>

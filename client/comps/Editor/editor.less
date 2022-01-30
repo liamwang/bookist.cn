@@ -1,0 +1,48 @@
+@aneditor-actionbar-color: #fff;
+@aneditor-button-height: 30px;
+@aneditor-button-selected-color: #f0f0f0;
+@aneditor-button-width: 30px;
+@aneditor-content-height: 300px;
+@aneditor-content-padding: 10px;
+
+.aneditor {
+  border: 1px solid #eee;
+  box-sizing: border-box;
+}
+
+.aneditor-content {
+  box-sizing: border-box;
+  height: @aneditor-content-height;
+  outline: 0;
+  overflow-y: auto;
+  padding: @aneditor-content-padding;
+  blockquote {
+    display: block;
+    border-left: 5px solid #e5e7e9;
+    padding: 10px 15px;
+    background-color: #f5f7f9;
+  }
+  blockquote p:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.aneditor-actionbar {
+  background-color: @aneditor-actionbar-color;
+  border-bottom: 1px solid #eee;
+}
+
+.aneditor-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  height: @aneditor-button-height;
+  outline: 0;
+  min-width: @aneditor-button-width;
+  vertical-align: bottom;
+}
+
+.aneditor-button-selected {
+  background-color: @aneditor-button-selected-color;
+}
