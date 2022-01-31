@@ -16,18 +16,10 @@ public class UploadController : ControllerBase
         _qiniuService = qiniuService;
     }
 
-    // 用于HTML表单上传方式
     [HttpGet("[action]")]
     public TypedValue<string> QiniuToken()
     {
         var token = _qiniuService.GetUploadToken();
         return new TypedValue<string>() { Value = token };
-    }
-
-    [HttpPost("[action]")]
-    public void Image(IFormFile file)
-    {
-        using var steam = file.OpenReadStream();
-        _qiniuService.UploadFile(steam);
     }
 }

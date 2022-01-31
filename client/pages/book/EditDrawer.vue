@@ -15,7 +15,7 @@ import {
 } from 'ant-design-vue'
 import { FormInstance } from 'ant-design-vue/es/form/Form'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons-vue'
-import IntroEditor from '../../comps/Editor/index.vue'
+import IntroEditor from '../../comps/Editor'
 import useAsync from '../../utils/useAsync'
 import { getQiniuToken, saveBook, getBookById } from '../../api/book'
 import { getTags } from '../../api/tag'

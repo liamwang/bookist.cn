@@ -89,10 +89,10 @@ const defaultActions = {
 }
 
 const defaultClasses = {
-  actionbar: 'aneditor-actionbar',
-  button: 'aneditor-button',
-  content: 'aneditor-content',
-  selected: 'aneditor-button-selected',
+  actionbar: 'an-editor-actionbar',
+  button: 'an-editor-button',
+  content: 'an-editor-content',
+  selected: 'an-editor-button-selected',
 }
 
 interface Settings {
@@ -118,7 +118,7 @@ export const init = (settings: Settings) => {
 
   const classes = { ...defaultClasses, ...settings.classes }
 
-  settings.element.className = 'aneditor'
+  settings.element.className = 'an-editor'
 
   const actionbar = createElement('div')
   actionbar.className = classes.actionbar
