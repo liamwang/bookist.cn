@@ -18,7 +18,10 @@ host.ConfigureServices((builder, services) =>
         var conStr = builder.Configuration.GetConnectionString("BookistConnection");
         opt.UseMySql(conStr, ServerVersion.AutoDetect(conStr), o => o.MigrationsAssembly("Migrator"));
     });
-
+    services.AddTransient<MockData>();
 });
 
-host.Build();
+var app = host.Build();
+
+var mockData = app.Services.GetService<MockData>();
+mockData.Execute();

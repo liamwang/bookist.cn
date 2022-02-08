@@ -46,13 +46,13 @@ public class BookService : ServiceBase<Db>
 
         foreach (var book in result.Items)
         {
-            book.Tags = bookTags.Where(x => x.BookId == book.Id).Select(x => x.Tag);
+            book.Tags = bookTags.Where(x => x.BookId == book.Id).Select(x => x.Tag).ToList();
         }
 
         return result;
     }
 
-    public async Task<BookDto> GetByIdAsync(long id, bool includeLinks = false)
+    public async Task<BookDto> GetByIdAsync(long id)
     {
         var sql_ = Db.NewSql();
 
@@ -66,7 +66,7 @@ public class BookService : ServiceBase<Db>
             .Line("FROM BookTag BT")
             .Line("LEFT JOIN Tag T ON T.Id=BT.TagId")
             .Line("WHERE BT.BookId=@id");
-        book.Tags = await Db.QueryAsync<Tag>(sql_, new { id });
+        book.Tags = (await Db.QueryAsync<Tag>(sql_, new { id })).ToList();
 
         return book;
     }

@@ -5,17 +5,17 @@
     {
         <div class="col-lg-3 col-md-4 col-sm-6">
             <div class="card mb-4 text-center border-0">
-                <a asp-controller="Book" asp-route-id="@item.Id" class="card-img-top">
-                    <img src="@UrlUtil.Thumb(item.Cover)" alt="@item.Name">
+                <a asp-controller="Book" asp-action="Detail" asp-route-slug="@item.Slug" class="card-img-top">
+                    <img src="@UrlUtil.Thumb(item.Cover)" alt="@item.Title">
                 </a>
                 <div class="card-body">
                     <h5 class="card-title ellipsis">
-                        <a  asp-controller="Book" asp-route-id="@item.Id" class="text-decoration-none">@item.Name</a>
+                        <a asp-controller="Book"  asp-action="Detail" asp-route-slug="@item.Slug" class="text-decoration-none">@item.Title</a>
                     </h5>
                     <div class="text-nowrap overflow-hidden">
                         @foreach (var tag in item.Tags)
                         {
-                            <a asp-controller="Tag" asp-route-id="@tag.Id" class="badge badge-light">@tag.Name</a>
+                            <a asp-controller="Tag" asp-route-id="@tag.Id" class="badge bg-light text-dark">@tag.Name</a>
                         }
                     </div>
                 </div>
@@ -24,5 +24,4 @@
     }
 </div>
 
-<div class="text-center" page-model="@Model.Pager" page-controller="Home" page-action="Index"></div>
-
+<div class="text-center" page-model="@Model.Pager" page-controller="Book" page-action="Index"></div>

@@ -11,7 +11,7 @@ export class RequestError extends Error {
 }
 
 const errorMap: Record<string, string> = {
-  '400': '请求出错',
+  '400': '错误请求',
   '401': '请重新登录',
   '403': '权限不足，禁止访问',
   '404': '资源不存在',
@@ -22,6 +22,7 @@ const errorMap: Record<string, string> = {
 const handleError = (code: number, message?: string | undefined) => {
   if (code === 401) {
     location.href = import.meta.env.VITE_LOGIN_URL
+    return
   }
   return new RequestError(message || errorMap[code] || errorMap['default'])
 }
@@ -41,36 +42,34 @@ class Http {
     return this.container[baseUrl]
   }
 
-  request<D>(url: string, config: RequestConfig = {}): Promise<D | undefined> {
+  async request<D>(url: string, config: RequestConfig = {}): Promise<D | undefined> {
     let fullUrl = /^((https?:)|\/)/.test(url) ? url : `${this.baseUrl}/${url}`
     if (config.params && Object.keys(config.params).length > 0) {
       fullUrl += '?' + queryString(config.params)
     }
-
-    return fetch(fullUrl, {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: config.data ? JSON.stringify(config.data) : undefined,
-      ...config,
-    })
-      .then(async (response) => {
-        if (response.ok) {
-          const result: ApiResult<D> = await response.json()
-          if (result.code === 0 || result.code === 200) {
-            return result.data
-          }
-          if (result.code) {
-            throw handleError(result.code, result.message)
-          }
+    try {
+      const response = await fetch(fullUrl, {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: config.data ? JSON.stringify(config.data) : undefined,
+        ...config,
+      })
+      if (response.ok) {
+        const result: ApiResult<D> = await response.json()
+        if (result.code === 0 || result.code === 200) {
+          return result.data
         }
-        throw handleError(response.status)
-      })
-      .catch((e) => {
-        Message.error(e instanceof RequestError ? e.message : '错误请求')
-        throw e
-      })
+        if (result.code) {
+          throw handleError(result.code, result.message)
+        }
+      }
+      throw handleError(response.status)
+    } catch (e) {
+      Message.error(e instanceof RequestError ? e.message : '请求出错')
+      throw e
+    }
   }
 
   get<D>(url: string, params?: object) {

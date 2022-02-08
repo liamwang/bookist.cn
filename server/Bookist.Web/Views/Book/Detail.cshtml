@@ -1,0 +1,81 @@
+@model BookDto
+@{
+    ViewData["Title"] = Model.Title;
+    ViewData["Description"] = Model.Intro;
+    ViewData["OgType"] = "article";
+    var downloadCode = ViewData["DownloadCode"]?.ToString();
+}
+
+<div class="bg-white p-5">
+    <h1>@Model.Title</h1>
+    @if (!string.IsNullOrEmpty(Model.Subtitle))
+    {
+        <h2 class="text-muted">@Model.Subtitle</h2>
+    }
+    <div style="font-size:14px;">
+        <span>作者:</span>
+        <span>@Model.Author</span>
+        <span class="me-3"></span>
+        <span>出版年月:</span>
+        <span>@Model.PubDate.ToString("yyyy-MM")</span>
+        <span class="me-3"></span>
+        <span>标签:</span>
+        <span>
+            @for (var i = 0; i < Model.Tags.Count; i++)
+            {
+                <a href="" class="text-muted">@Model.Tags[i].Name</a>
+                if (i != Model.Tags.Count - 1)
+                {
+                    <span>/</span>
+                }
+            }
+        </span>
+    </div>
+    <div>
+        <img class="rounded mx-auto my-4 d-block" alt="@Model.Title" src="@UrlUtil.Image(Model.Cover, ImageSize.MD)" />
+    </div>
+    <div class="book-intro">
+        @Html.Raw(Model.Intro)
+    </div>
+    <div class="border-top pt-4">
+        <div class="mb-2">
+            @if (!string.IsNullOrEmpty(Model.OrgUrl))
+            {
+                <span>官方链接：</span>
+                <a href="@Model.OrgUrl" target="_blank">@UrlUtil.Domain(Model.OrgUrl)</a>
+            }
+        </div>
+        <div>
+            <span>下载地址：</span>
+            <a href="@Model.FetchUrl" target="_blank">@Model.Formats 下载</a>
+            @if (!string.IsNullOrEmpty(Model.FetchCode))
+            {
+                <span class="ms-3">提取码：@Model.FetchCode</span>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    (function () {
+        var tocEl = document.querySelector('.book-intro');
+        var expandBtn = document.querySelector('.btn-expand');
+        function isOverflown(element) {
+            return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+        }
+        function toggleExpand() {
+            tocEl.classList.toggle('showall');
+            if (tocEl.classList.contains('showall')) {
+                expandBtn.innerHTML = '����';
+            } else {
+                expandBtn.innerHTML = '��ʾ����';
+            }
+        }
+        if (isOverflown(tocEl)) {
+            expandBtn.classList.remove('hide');
+            expandBtn.addEventListener('click', toggleExpand);
+        }
+    })();
+</script>
+}

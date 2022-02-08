@@ -11,7 +11,7 @@ using Migrator;
 namespace Migrator.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20220125064528_00")]
+    [Migration("20220208071513_00")]
     partial class _00
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,8 +59,7 @@ namespace Migrator.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<string>("OrgUrl")
                         .HasMaxLength(127)
                         .HasColumnType("varchar(127)");
 
@@ -68,6 +67,16 @@ namespace Migrator.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(127)
+                        .HasColumnType("varchar(127)");
+
+                    b.Property<string>("Subtitle")
+                        .IsRequired()
+                        .HasMaxLength(127)
+                        .HasColumnType("varchar(127)");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(127)
                         .HasColumnType("varchar(127)");

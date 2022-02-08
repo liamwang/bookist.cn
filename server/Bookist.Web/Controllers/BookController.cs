@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bookist.Web.Controllers;
 
-public class HomeController : Controller
+public class BookController : Controller
 {
     private readonly BookService _bookService;
 
-    public HomeController(BookService bookService)
+    public BookController(BookService bookService)
     {
         _bookService = bookService;
     }
 
-    public async Task<ViewResult> Index(int pageNo = 1, int pageSize = 5)
+    public async Task<ViewResult> Index(int pageNo = 1, int pageSize = 12)
     {
         var page = await _bookService.GetAsync(pageNo, pageSize);
         var vm = new BookListVM()
@@ -27,5 +27,16 @@ public class HomeController : Controller
             }
         };
         return View(vm);
+    }
+
+    public async Task<ActionResult> Detail(string slug)
+    {
+        if (UrlUtil.ResolveIdInSlug(slug, out var id))
+        {
+            var vm = await _bookService.GetByIdAsync(id);
+            ViewData["Description"] = vm.Intro;
+            return View(vm);
+        }
+        return NotFound();
     }
 }

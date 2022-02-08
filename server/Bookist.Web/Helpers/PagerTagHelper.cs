@@ -27,7 +27,7 @@ public class PagerTagHelper : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        IUrlHelper urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
+        var urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
 
         TagBuilder CreatePageButton(int pageNo, string text)
         {
@@ -38,10 +38,10 @@ public class PagerTagHelper : TagHelper
             return tag;
         }
 
-        TagBuilder textTag = new("div");
-        textTag.AddCssClass("my-3");
-        textTag.InnerHtml.Append($"第 {PageModel.PageNo} 页，共 {PageModel.TotalPages} 页");
-        output.Content.AppendHtml(textTag);
+        //TagBuilder textTag = new("div");
+        //textTag.AddCssClass("my-3");
+        //textTag.InnerHtml.Append($"第 {PageModel.PageNo} 页，共 {PageModel.TotalPages} 页");
+        //output.Content.AppendHtml(textTag);
 
         TagBuilder btnsTag = new("div");
         btnsTag.AddCssClass("my-3");

@@ -5,9 +5,13 @@ namespace Bookist.Entities;
 
 public class Book : AuditEntity
 {
+    /// <summary>标题</summary>
+    [Required, Varchar(127)]
+    public string Title { get; set; }
+
     /// <summary>名称</summary>
     [Required, Varchar(127)]
-    public string Name { get; set; }
+    public string Subtitle { get; set; }
 
     /// <summary>
     /// 处理后标题（用于构建URL）
@@ -31,6 +35,10 @@ public class Book : AuditEntity
     [Required, Text]
     public string Intro { get; set; }
 
+    /// <summary>官方链接</summary>
+    [Varchar(127)]
+    public string OrgUrl { get; set; }
+
     /// <summary>文件格式（用“/”分隔多个）</summary>
     [Required, Varchar(50)]
     public string Formats { get; set; }
@@ -40,7 +48,7 @@ public class Book : AuditEntity
     public string FetchUrl { get; set; }
 
     /// <summary>提取码</summary>
-    [MaxLength(10)]
+    [Varchar(10)]
     public string FetchCode { get; set; }
 
     /// <summary>阅读数</summary>
@@ -49,5 +57,5 @@ public class Book : AuditEntity
     /// <summary>下载数</summary>
     public int Downloads { get; set; }
 
-    public IEnumerable<Tag> Tags { get; set; } = Enumerable.Empty<Tag>();
+    public IList<Tag> Tags { get; set; } = new List<Tag>();
 }

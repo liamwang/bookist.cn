@@ -55,9 +55,11 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute("home", "",
-        new { controller = "Home", Action = "Index", pageNo = 1 });
+        new { controller = "Book", Action = "Index", pageNo = 1 });
     endpoints.MapControllerRoute("page", "page/{pageNo:int}",
-        new { Controller = "Home", Action = "Index" });
+        new { Controller = "Book", Action = "Index" });
+    endpoints.MapControllerRoute("book", "book/{slug}",
+       new { Controller = "Book", Action = "Detail" });
     endpoints.MapDefaultControllerRoute();
 });
 

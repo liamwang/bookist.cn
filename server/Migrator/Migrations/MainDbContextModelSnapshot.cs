@@ -57,8 +57,7 @@ namespace Migrator.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<string>("OrgUrl")
                         .HasMaxLength(127)
                         .HasColumnType("varchar(127)");
 
@@ -66,6 +65,16 @@ namespace Migrator.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(127)
+                        .HasColumnType("varchar(127)");
+
+                    b.Property<string>("Subtitle")
+                        .IsRequired()
+                        .HasMaxLength(127)
+                        .HasColumnType("varchar(127)");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(127)
                         .HasColumnType("varchar(127)");

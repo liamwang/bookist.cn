@@ -17,7 +17,7 @@ public class Mapping
             {
                 if (des.Id == 0) des.Id = IdGen.NewId();
                 else des.UpdatedAt = DateTime.Now;
-                des.Slug = UrlUtil.ParseSlug(des.Name, des.Id);
+                des.Slug = UrlUtil.ParseSlug(des.Title, des.Id);
             });
     }
 }

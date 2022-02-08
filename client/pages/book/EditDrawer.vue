@@ -26,11 +26,14 @@ const emit = defineEmits<{
 
 const form = reactive({
   id: 0,
-  name: '',
+  title: '',
+  subtitle: '',
   author: '',
+  isbn: '',
   pubDate: undefined,
   cover: '',
   coverUrl: '',
+  orgUrl: '',
   tags: [],
   fetchUrl: '',
   fetchCode: '',
@@ -39,7 +42,7 @@ const form = reactive({
 })
 
 const rules = {
-  name: [{ required: true, message: '此项不能为空' }],
+  title: [{ required: true, message: '此项不能为空' }],
   pubDate: [{ required: true, message: '此项不能为空' }],
   cover: [{ required: true, message: '请上传封面' }],
   tags: [{ required: true, message: '此项不能为空' }],
@@ -148,10 +151,24 @@ defineExpose({ open })
             </div>
           </Upload>
         </Form.Item>
-        <Row :gutter="16">
+        <Row>
           <Col :span="24">
-            <Form.Item label="书名" name="name">
-              <Input v-model:value="form.name" />
+            <Form.Item label="标题" name="title">
+              <Input v-model:value="form.title" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col :span="24">
+            <Form.Item label="子标题" name="subtitle">
+              <Input v-model:value="form.subtitle" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col :span="24">
+            <Form.Item label="官方链接" name="orgUrl">
+              <Input v-model:value="form.orgUrl" />
             </Form.Item>
           </Col>
         </Row>

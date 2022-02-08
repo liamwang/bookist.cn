@@ -46,10 +46,16 @@ const columns: ColumnProps[] = [
     customRender: (r: any) => <img src={r.text} style="height:55px" />,
   },
   {
-    title: '书名',
-    dataIndex: 'name',
+    title: '标题',
+    dataIndex: 'title',
     // ellipsis: true,
     width: 320,
+    customRender: ({ record }: any) => (
+      <>
+        <div>{record.title}</div>
+        <div style="line-height:1.4;font-size:12px;color:#777;">{record.subtitle}</div>
+      </>
+    ),
   },
   {
     title: '作者',

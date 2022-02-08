@@ -33,16 +33,16 @@ public static class UrlUtil
         return slug == "" ? id.ToString() : slug + "-" + id;
     }
 
-    public static long ResolveIdInSlug(string slug)
+    public static bool ResolveIdInSlug(string slug, out long id)
     {
         ArgumentNullException.ThrowIfNull(slug);
 
         var splitIndex = slug.LastIndexOf('-');
-        if (splitIndex == -1)
-        {
-            return long.Parse(slug);
-        }
+        return long.TryParse(slug[(splitIndex + 1)..], out id);
+    }
 
-        return long.Parse(slug[(splitIndex + 1)..]);
+    public static string Domain(string url)
+    {
+         return new Uri(url).Host;
     }
 }

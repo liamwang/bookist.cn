@@ -17,7 +17,9 @@ namespace Migrator.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
-                    Name = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
+                    Title = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Subtitle = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Slug = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -27,6 +29,8 @@ namespace Migrator.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PubDate = table.Column<DateTime>(type: "date", nullable: false),
                     Intro = table.Column<string>(type: "text", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    OrgUrl = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Formats = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),

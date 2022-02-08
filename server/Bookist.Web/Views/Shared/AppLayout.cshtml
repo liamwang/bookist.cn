@@ -1,9 +1,21 @@
 ﻿@{
     var title = "书大师 • 只分享精品好书";
-    if(ViewData["Title"] is not null)
+    if (ViewData["Title"] is not null)
     {
         title = $"{ViewData["Title"]} - 书大师";
     }
+
+    var description = "这是一个分享优质电子书资源的小站，电子书资源搜集于网络，本站进行归类整理，并坚持定期更新，方便大家查找和免费下载。";
+    if (ViewData["Description"] is not null)
+    {
+        description = ViewData["Description"] as string;
+        if (description.Length > 200)
+        {
+            description = description.Substring(0, 200) + "...";
+        }
+    }
+
+    string alertMessage = TempData["Alert"]?.ToString();
 }
 
 <!DOCTYPE html>
@@ -16,12 +28,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
     <title>@title</title>
+    <meta name="description" content="@description" />
+    <meta name="keywords" content="电子书, 书籍, 图书, 下载, E-book, pdf, azw3, epub, mobi" />
     <link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="/Bookist.Web.styles.css" asp-append-version="true" />
 </head>
 
 <body>
+    @if (!string.IsNullOrEmpty(alertMessage))
+    {
+        <div class="alert alert-danger">@alertMessage</div>
+    }
     @RenderBody()
 </body>
 

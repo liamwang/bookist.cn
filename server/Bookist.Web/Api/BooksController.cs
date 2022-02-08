@@ -19,7 +19,7 @@ public class BooksController : ControllerBase
 
     [HttpGet]
     public async Task<PagedResult<BookDto>> Get(
-        int page = 1, int size = 10, string keyword = null)
+        int page = 1, int size = 12, string keyword = null)
     {
         return await _bookService.GetAsync(page, size, keyword);
     }
@@ -27,7 +27,7 @@ public class BooksController : ControllerBase
     [HttpGet("{id}")]
     public Task<BookDto> GetById(long id)
     {
-        return _bookService.GetByIdAsync(id, true);
+        return _bookService.GetByIdAsync(id);
     }
 
     [HttpPost]

@@ -3,9 +3,6 @@ import { ref } from 'vue'
 const useAsync = () => {
   const loading = ref(false)
   const run = async (promise: Promise<any>) => {
-    if (!promise || !promise.then) {
-      throw new Error('参数必须是 Promise 类型')
-    }
     loading.value = true
     try {
       return await promise
