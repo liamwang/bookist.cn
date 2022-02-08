@@ -14,15 +14,20 @@ public class BookService : ServiceBase<Db>
         db.Connection.Open();
     }
 
-    public async Task<PagedResult<BookDto>> GetAsync(int page, int size, string keyword = null)
+    public async Task<PagedResult<BookDto>> GetAsync(int page, int size, string keyword = null, long? tagId = null)
     {
         var param = new SqlParams();
 
         var sql_ = Db.NewSql().From("Book").Where();
         if (!string.IsNullOrEmpty(keyword))
         {
-            sql_.Line("AND (Name LIKE @pattern OR Author LIKE @pattern)");
+            sql_.Line("AND (Title LIKE @pattern OR Subtitle LIKE @pattern OR Author LIKE @pattern)");
             param.Add("pattern", $"%{keyword}%");
+        }
+        if (tagId.HasValue)
+        {
+            sql_.Line("AND EXIST (SELECT 1 FROM BookTag WHERE BookId=Book.Id AND TagId=@tagId)");
+            param.Add("tagId", tagId.Value);
         }
 
         var result = new PagedResult<BookDto>(page, size)
@@ -94,12 +99,11 @@ public class BookService : ServiceBase<Db>
             "SELECT * FROM Tag WHERE Name IN @Tags", new { dto.Tags });
         var newTags = dto.Tags
             .Where(x => !existTags.Any(y => y.Name == x))
-            .Select(x => new Tag { Name = x }).ToArray();
-        foreach (var tag in newTags)
-        {
-            tag.Id = IdGen.NewId();
-            tag.Slug = UrlUtil.ParseSlug(tag.Name, tag.Id);
-        }
+            .Select(x => new Tag { Id = IdGen.NewId(), Name = x }).ToList();
+        //foreach (var tag in newTags)
+        //{
+        //    tag.Id = IdGen.NewId();
+        //}
         await Db.InsertBatchAsync(newTags);
 
         // Handle BookTags

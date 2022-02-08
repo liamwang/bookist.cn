@@ -22,7 +22,7 @@ const query = () => {
     <Form layout="inline">
       <Form.Item label="关键字">
         <Input
-          placeholder="书名/作者"
+          placeholder="标题/作者"
           v-model:value="keyword"
           :allow-clear="true"
           style="width: 240px"

@@ -21,8 +21,6 @@ namespace Migrator.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Subtitle = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Slug = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Cover = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Author = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
@@ -55,8 +53,6 @@ namespace Migrator.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
                     Name = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Slug = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -91,21 +87,9 @@ namespace Migrator.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Book_Slug",
-                table: "Book",
-                column: "Slug",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_BookTag_TagId",
                 table: "BookTag",
                 column: "TagId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tag_Slug",
-                table: "Tag",
-                column: "Slug",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

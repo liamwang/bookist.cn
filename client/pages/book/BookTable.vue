@@ -20,13 +20,15 @@ const pagination = computed(() => ({
 }))
 
 const query = async (params = {}) => {
-  const result = await run(getBooks({ page: 1, size: 10, ...params }))
+  const page = pagination.value.current || 1
+  const size = pagination.value.pageSize || 10
+  const result = await run(getBooks({ page, size, ...params }))
   Object.assign(data, result)
 }
 defineExpose({ query })
 
-const handleTableChange = ({ current }: any) => {
-  query({ page: current })
+const handleTableChange = ({ current, pageSize }: any) => {
+  query({ page: current, size: pageSize })
 }
 
 const handleDelete = async (id: number) => {

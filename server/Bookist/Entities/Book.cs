@@ -13,12 +13,6 @@ public class Book : AuditEntity
     [Required, Varchar(127)]
     public string Subtitle { get; set; }
 
-    /// <summary>
-    /// 处理后标题（用于构建URL）
-    /// </summary>
-    [Required, Varchar(127)]
-    public string Slug { get; set; }
-
     /// <summary>封面（文件Key）</summary>
     [Required, Varchar(255)]
     public string Cover { get; set; }

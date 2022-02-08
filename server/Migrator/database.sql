@@ -12,7 +12,6 @@ CREATE TABLE `Book` (
     `Id` bigint NOT NULL,
     `Title` varchar(127) CHARACTER SET utf8mb4 NOT NULL,
     `Subtitle` varchar(127) CHARACTER SET utf8mb4 NOT NULL,
-    `Slug` varchar(127) CHARACTER SET utf8mb4 NOT NULL,
     `Cover` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
     `Author` varchar(100) CHARACTER SET utf8mb4 NULL,
     `PubDate` date NOT NULL,
@@ -31,7 +30,6 @@ CREATE TABLE `Book` (
 CREATE TABLE `Tag` (
     `Id` bigint NOT NULL,
     `Name` varchar(20) CHARACTER SET utf8mb4 NOT NULL,
-    `Slug` varchar(20) CHARACTER SET utf8mb4 NOT NULL,
     CONSTRAINT `PK_Tag` PRIMARY KEY (`Id`)
 ) CHARACTER SET=utf8mb4;
 
@@ -43,14 +41,10 @@ CREATE TABLE `BookTag` (
     CONSTRAINT `FK_BookTag_Tag_TagId` FOREIGN KEY (`TagId`) REFERENCES `Tag` (`Id`) ON DELETE CASCADE
 ) CHARACTER SET=utf8mb4;
 
-CREATE UNIQUE INDEX `IX_Book_Slug` ON `Book` (`Slug`);
-
 CREATE INDEX `IX_BookTag_TagId` ON `BookTag` (`TagId`);
 
-CREATE UNIQUE INDEX `IX_Tag_Slug` ON `Tag` (`Slug`);
-
 INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
-VALUES ('20220208071513_00', '6.0.1');
+VALUES ('20220208101053_00', '6.0.1');
 
 COMMIT;
 

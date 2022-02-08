@@ -1,29 +1,25 @@
 ﻿@{
     Layout = "AppLayout";
 }
-<header id="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <div class="container">
-            <a class="navbar-brand" href="/">书大师</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    @*<li class="nav-item">
-                        <a class="nav-link active" href="#">首页</a>
-                    </li>*@
-                </ul>
-                <div class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="搜索">
-                     <a class="btn btn-warning lift" asp-action="Buymeacoffee" asp-controller="Home">
-                        请我喝一杯
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container d-flex justify-content-between">
+        <a class="navbar-brand" href="/">书大师</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link @Url.Active("/")" href="/">首页</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @Url.Active("/tag")" href="/tag">标签</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @Url.Active("/sponsor")" href="/sponsor">赞助</a>
+            </li>
+        </ul>
+        <form class="d-flex " id="navbarContent">
+            <input class="form-control" type="search" placeholder="搜索">
+        </form>
+    </div>
+</nav>
 
 <main id="main" class="container pb-4 pt-4">
     @RenderBody()

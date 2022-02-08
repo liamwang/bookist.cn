@@ -20,27 +20,6 @@ public static class UrlUtil
         return Config.ImageBaseUrl + fileKey + size;
     }
 
-    public static string ParseSlug(string name, long id)
-    {
-        ArgumentNullException.ThrowIfNull(name);
-
-        var slug = name.ToLower()
-            .Replace("c#", "csharp")
-            .Replace("c++", "cpp");
-
-        slug = Regex.Replace(slug, @"[^0-9a-z]+", "-").Trim('-');
-
-        return slug == "" ? id.ToString() : slug + "-" + id;
-    }
-
-    public static bool ResolveIdInSlug(string slug, out long id)
-    {
-        ArgumentNullException.ThrowIfNull(slug);
-
-        var splitIndex = slug.LastIndexOf('-');
-        return long.TryParse(slug[(splitIndex + 1)..], out id);
-    }
-
     public static string Domain(string url)
     {
          return new Uri(url).Host;

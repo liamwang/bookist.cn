@@ -64,11 +64,6 @@ namespace Migrator.Migrations
                     b.Property<DateTime>("PubDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(127)
-                        .HasColumnType("varchar(127)");
-
                     b.Property<string>("Subtitle")
                         .IsRequired()
                         .HasMaxLength(127)
@@ -86,9 +81,6 @@ namespace Migrator.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Slug")
-                        .IsUnique();
 
                     b.ToTable("Book");
                 });
@@ -118,15 +110,7 @@ namespace Migrator.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("Slug")
-                        .IsUnique();
 
                     b.ToTable("Tag");
                 });

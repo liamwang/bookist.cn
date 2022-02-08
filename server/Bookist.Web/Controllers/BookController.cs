@@ -6,6 +6,8 @@ namespace Bookist.Web.Controllers;
 
 public class BookController : Controller
 {
+    const int _pageSize = 12;
+
     private readonly BookService _bookService;
 
     public BookController(BookService bookService)
@@ -13,30 +15,27 @@ public class BookController : Controller
         _bookService = bookService;
     }
 
-    public async Task<ViewResult> Index(int pageNo = 1, int pageSize = 12)
+    public async Task<ViewResult> Index(
+        int p = 1, string keyword = null, long? tagId = null)
     {
-        var page = await _bookService.GetAsync(pageNo, pageSize);
+        var pageData = await _bookService.GetAsync(p, _pageSize, keyword, tagId);
         var vm = new BookListVM()
         {
-            Books = page.Items,
+            Books = pageData.Items,
             Pager = new()
             {
-                PageNo = pageNo,
-                PageSize = pageSize,
-                TotalItems = page.Total
+                PageNo = p,
+                PageSize = _pageSize,
+                TotalItems = pageData.Total
             }
         };
         return View(vm);
     }
 
-    public async Task<ActionResult> Detail(string slug)
+    public async Task<ActionResult> Detail(long id)
     {
-        if (UrlUtil.ResolveIdInSlug(slug, out var id))
-        {
-            var vm = await _bookService.GetByIdAsync(id);
-            ViewData["Description"] = vm.Intro;
-            return View(vm);
-        }
-        return NotFound();
+        var vm = await _bookService.GetByIdAsync(id);
+        ViewData["Description"] = vm.Intro;
+        return View(vm);
     }
 }

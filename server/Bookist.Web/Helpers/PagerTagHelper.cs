@@ -29,11 +29,11 @@ public class PagerTagHelper : TagHelper
     {
         var urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
 
-        TagBuilder CreatePageButton(int pageNo, string text)
+        TagBuilder CreatePageButton(int page, string text)
         {
             TagBuilder tag = new("a");
             tag.AddCssClass("btn btn-outline-primary me-3");
-            tag.Attributes["href"] = urlHelper.Action(PageAction, PageController, new { pageNo });
+            tag.Attributes["href"] = urlHelper.Action(PageAction, PageController, new { p = page });
             tag.InnerHtml.Append(text);
             return tag;
         }

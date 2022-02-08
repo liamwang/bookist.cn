@@ -16,7 +16,7 @@ public class MockData
         if (_context.Set<Book>().Any())
             return;
 
-        var tag = new Tag { Id = 1001, Name = "DepOps", Slug = "devops" };
+        var tag = new Tag { Id = 1001, Name = "DepOps" };
         _context.Add(tag);
 
         for (var i = 0; i < 100; i++)
@@ -56,7 +56,6 @@ public class MockData
 </p>",
                 PubDate = new DateTime(2010, 7, 1),
                 OrgUrl = "https://www.amazon.com/Continuous-Delivery-Deployment-Automation-Addison-Wesley-dp-0321601912/dp/0321601912",
-                Slug = (1000 + i).ToString(),
                 Subtitle = "Reliable Software Releases through Build, Test, and Deployment Automation",
                 Title = "Continuous Delivery " + (1000 + i),
                 Tags = new List<Tag> { tag }

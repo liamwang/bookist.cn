@@ -11,7 +11,7 @@ using Migrator;
 namespace Migrator.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20220208071513_00")]
+    [Migration("20220208101053_00")]
     partial class _00
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,11 +66,6 @@ namespace Migrator.Migrations
                     b.Property<DateTime>("PubDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(127)
-                        .HasColumnType("varchar(127)");
-
                     b.Property<string>("Subtitle")
                         .IsRequired()
                         .HasMaxLength(127)
@@ -88,9 +83,6 @@ namespace Migrator.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Slug")
-                        .IsUnique();
 
                     b.ToTable("Book");
                 });
@@ -120,15 +112,7 @@ namespace Migrator.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("Slug")
-                        .IsUnique();
 
                     b.ToTable("Tag");
                 });

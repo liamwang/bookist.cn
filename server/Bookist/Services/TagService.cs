@@ -38,14 +38,6 @@ public class TagService : ServiceBase<Db>
     {
         using var tran = Db.BeginTransaction();
 
-        var existSlug = await Db.FirstOrDefaultAsync<string>(
-            "SELECT Slug FROM Tag WHERE Slug=@Slug AND Id<>@Id",
-            new { dto.Slug, dto.Id });
-        if (existSlug != null)
-        {
-            throw new BadRequestException("标签Slug已存在！");
-        }
-
         if (dto.Id == 0) // Insert
         {
             var tag = dto.Adapt<Tag>();

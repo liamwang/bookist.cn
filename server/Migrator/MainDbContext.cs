@@ -15,7 +15,6 @@ public class MainDbContext : DbContext
         builder.Entity<Book>(b =>
         {
             b.Property(x => x.Id).ValueGeneratedNever();
-            b.HasIndex(x => x.Slug).IsUnique();
             b.HasMany(x => x.Tags).WithMany(x => x.Books).UsingEntity<BookTag>(
                 j => j.HasOne(x => x.Tag).WithMany().HasForeignKey(x => x.TagId),
                 j => j.HasOne(x => x.Book).WithMany().HasForeignKey(x => x.BookId),
@@ -25,7 +24,6 @@ public class MainDbContext : DbContext
         builder.Entity<Tag>(b =>
         {
             b.Property(x => x.Id).ValueGeneratedNever();
-            b.HasIndex(x => x.Slug).IsUnique();
         });
     }
 }

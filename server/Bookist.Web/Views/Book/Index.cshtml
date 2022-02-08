@@ -1,5 +1,9 @@
 @model BookListVM
 
-<div class="book-list">
-    @await Html.PartialAsync("_List", Model)
-</div>
+@if (!string.IsNullOrEmpty(Model.CurrentTag))
+{
+    <div>
+        ±Í«©£∫@Model.CurrentTag
+    </div>
+}
+@await Html.PartialAsync("_List", Model)

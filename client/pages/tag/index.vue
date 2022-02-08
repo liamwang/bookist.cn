@@ -9,12 +9,11 @@ const keyword = ref('')
 const tags = ref<any[]>([])
 const modalVisible = ref(false)
 
-const form = reactive({ id: 0, name: '', slug: '' })
+const form = reactive({ id: 0, name: '' })
 const { resetFields, validate, validateInfos } = Form.useForm(
   form,
   reactive({
     name: [{ required: true, message: '此项不能为空' }],
-    slug: [{ required: true, message: '此项不能为空' }],
   })
 )
 
@@ -66,7 +65,7 @@ onMounted(() => {
       <Row :gutter="20">
         <Col :span="4" v-for="tag in tags">
           <Card size="small" style="margin-bottom: 15px">
-            <Card.Meta :title="tag.name" :description="`${tag.slug} · (${tag.bookCount})`" />
+            <Card.Meta :title="tag.name" :description="`书籍数 · ${tag.bookCount}`" />
             <template #actions>
               <EditOutlined @click="openEdit(tag)" />
               <Popconfirm title="确定要删除吗？" @confirm="handleDelete(tag.id)">
@@ -88,9 +87,6 @@ onMounted(() => {
     <Form :model="form" :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }">
       <Form.Item label="标签名" v-bind="validateInfos.name">
         <Input v-model:value="form.name" />
-      </Form.Item>
-      <Form.Item label="标签Slug" v-bind="validateInfos.slug">
-        <Input v-model:value="form.slug" />
       </Form.Item>
     </Form>
   </Modal>
