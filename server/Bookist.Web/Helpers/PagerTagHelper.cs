@@ -27,13 +27,26 @@ public class PagerTagHelper : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        if(PageModel.TotalItems == 0)
+        {
+            return;
+        }
+
+        var routeValues = new RouteValueDictionary();
+        foreach (var qs in ViewContext.HttpContext.Request.Query)
+        {
+            routeValues.Add(qs.Key, qs.Value);
+        }
+
         var urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
 
         TagBuilder CreatePageButton(int page, string text)
         {
+            routeValues["p"] = page;
+
             TagBuilder tag = new("a");
-            tag.AddCssClass("btn btn-outline-primary me-3");
-            tag.Attributes["href"] = urlHelper.Action(PageAction, PageController, new { p = page });
+            tag.AddCssClass("btn btn-outline-primary mx-1");
+            tag.Attributes["href"] = urlHelper.Action(PageAction, PageController, routeValues);
             tag.InnerHtml.Append(text);
             return tag;
         }

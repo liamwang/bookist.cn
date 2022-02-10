@@ -1,6 +1,10 @@
 @model BookListVM
 
 <div class="book-list">
+    @if (Model.Pager.TotalItems == 0)
+    {
+        <div class="alert alert-warning">对不起，暂无相关书籍！</div>
+    }
     <div class="row">
         @foreach (var item in Model.Books)
         {
@@ -16,7 +20,7 @@
                         <div class="text-nowrap overflow-hidden">
                             @foreach (var tag in item.Tags)
                             {
-                                <a asp-controller="Tag" asp-route-id="@tag.Id" class="badge bg-light text-dark">@tag.Name</a>
+                                <a asp-controller="Book" asp-action="Index" asp-route-tid="@tag.Id" class="badge bg-light text-dark">@tag.Name</a>
                             }
                         </div>
                     </div>

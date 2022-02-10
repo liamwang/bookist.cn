@@ -1,0 +1,12 @@
+@model IEnumerable<TagDto>
+
+<div class="bg-white p-4 d-flex flex-wrap justify-content-between tag-list" style="gap:50px 50px">
+    @foreach (var tag in Model)
+    {
+        <a asp-controller="Book" asp-action="Index" asp-route-tid="@tag.Id">
+            <span>@tag.Name</span>
+            <i class="text-muted">¡¤</i>
+            <small class="text-muted">@tag.BookCount</small>
+        </a>
+    }
+</div>

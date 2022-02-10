@@ -17,7 +17,7 @@ Mapping.Config();
 // 注册服务
 
 builder.Services
-    .AddAnet(opt => opt.EnableDefaultIdGen(0, 1))
+    .AddAnet(opt => opt.EnableDefaultIdGen(0, 1, 5))
     .AddDb<MySqlConnection>(DbDialect.MySQL, cnn, opt =>
     {
         opt.EnableMetrics = true;
@@ -56,7 +56,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute("home", "",
         new { Controller = "Book", Action = "Index", p = 1 });
-    endpoints.MapControllerRoute("pagination", "page/{p:int}",
+    endpoints.MapControllerRoute("page", "page/{p:int}",
         new { Controller = "Book", Action = "Index" });
     endpoints.MapControllerRoute("book", "book/{id:int}",
        new { Controller = "Book", Action = "Detail" });

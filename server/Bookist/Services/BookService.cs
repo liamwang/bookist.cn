@@ -26,7 +26,7 @@ public class BookService : ServiceBase<Db>
         }
         if (tagId.HasValue)
         {
-            sql_.Line("AND EXIST (SELECT 1 FROM BookTag WHERE BookId=Book.Id AND TagId=@tagId)");
+            sql_.Line("AND EXISTS (SELECT 1 FROM BookTag WHERE BookId=Book.Id AND TagId=@tagId)");
             param.Add("tagId", tagId.Value);
         }
 

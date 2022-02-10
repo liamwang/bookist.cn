@@ -3,41 +3,43 @@
     ViewData["Title"] = Model.Title;
     ViewData["Description"] = Model.Intro;
     ViewData["OgType"] = "article";
-    var downloadCode = ViewData["DownloadCode"]?.ToString();
 }
 
 <div class="bg-white p-5">
-    <h1>@Model.Title</h1>
-    @if (!string.IsNullOrEmpty(Model.Subtitle))
-    {
-        <h2 class="text-muted">@Model.Subtitle</h2>
-    }
-    <div style="font-size:14px;">
-        <span>作者:</span>
-        <span>@Model.Author</span>
-        <span class="me-3"></span>
-        <span>出版年月:</span>
-        <span>@Model.PubDate.ToString("yyyy-MM")</span>
-        <span class="me-3"></span>
-        <span>标签:</span>
-        <span>
-            @for (var i = 0; i < Model.Tags.Count; i++)
-            {
-                <a href="" class="text-muted">@Model.Tags[i].Name</a>
-                if (i != Model.Tags.Count - 1)
+    <div class="text-center">
+        <h1 class="display-6">@Model.Title</h1>
+        @if (!string.IsNullOrEmpty(Model.Subtitle))
+        {
+            <h2 class="lead">@Model.Subtitle</h2>
+        }
+        <div class="mt-4" style="font-size:14px; color:rgba(0,0,0,0.6)">
+            <span>作者:</span>
+            <span>@Model.Author</span>
+            <span class="me-2"></span>
+            <span>出版年月:</span>
+            <span>@Model.PubDate.ToString("yyyy-MM")</span>
+            <span class="me-2"></span>
+            <span>标签:</span>
+            <span>
+                @for (var i = 0; i < Model.Tags.Count; i++)
                 {
-                    <span>/</span>
+                    <a asp-controller="Book" asp-action="Index" asp-route-tid="@Model.Tags[i].Id" style="color:inherit">@Model.Tags[i].Name</a>
+                    if (i != Model.Tags.Count - 1)
+                    {
+                        <span>/</span>
+                    }
                 }
-            }
-        </span>
-    </div>
-    <div>
-        <img class="rounded mx-auto my-4 d-block" alt="@Model.Title" src="@UrlUtil.Image(Model.Cover, ImageSize.MD)" />
+            </span>
+        </div>
+        <img class="rounded my-4" alt="@Model.Title" src="@UrlUtil.Image(Model.Cover, ImageSize.MD)" />
     </div>
     <div class="book-intro">
         @Html.Raw(Model.Intro)
     </div>
-    <div class="border-top pt-4">
+    <div class="book-intro-toggle hidden">
+        <button class="btn btn-link">显示更多</button>
+    </div>
+    <div class="border-top pt-4 mt-4">
         <div class="mb-2">
             @if (!string.IsNullOrEmpty(Model.OrgUrl))
             {
@@ -59,22 +61,28 @@
 @section Scripts {
 <script>
     (function () {
-        var tocEl = document.querySelector('.book-intro');
-        var expandBtn = document.querySelector('.btn-expand');
-        function isOverflown(element) {
-            return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+        console.log(111)
+        var contentEl = document.querySelector('.book-intro');
+        var toggleEl = document.querySelector('.book-intro-toggle');
+        var toggleBtn = document.querySelector('.book-intro-toggle > button');
+
+        function isOverflow(element) {
+            console.log(element.scrollHeight,element.clientHeight)
+            return element.scrollHeight > element.clientHeight;
         }
+
         function toggleExpand() {
-            tocEl.classList.toggle('showall');
-            if (tocEl.classList.contains('showall')) {
-                expandBtn.innerHTML = '收起';
+            contentEl.classList.toggle('expand');
+            if (contentEl.classList.contains('expand')) {
+                toggleBtn.innerHTML = '收起';
             } else {
-                expandBtn.innerHTML = '显示更多';
+                toggleBtn.innerHTML = '显示更多';
             }
         }
-        if (isOverflown(tocEl)) {
-            expandBtn.classList.remove('hide');
-            expandBtn.addEventListener('click', toggleExpand);
+
+        if (isOverflow(contentEl)) {
+            toggleEl.classList.remove('hidden');
+            toggleBtn.addEventListener('click', toggleExpand);
         }
     })();
 </script>

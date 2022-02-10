@@ -1,9 +1,15 @@
 @model BookListVM
 
+@if (!string.IsNullOrEmpty(Model.CurrentKeyword))
+{
+    <div class="lead mb-3">
+        关键词“<span class="text-danger">@Model.CurrentKeyword</span>”共找到 @Model.Pager.TotalItems 条结果
+    </div>
+}
 @if (!string.IsNullOrEmpty(Model.CurrentTag))
 {
-    <div>
-        标签：@Model.CurrentTag
+    <div class="lead mb-3">
+        标签：<span class="text-danger">@Model.CurrentTag</span>
     </div>
 }
 @await Html.PartialAsync("_List", Model)
