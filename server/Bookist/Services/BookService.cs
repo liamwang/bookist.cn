@@ -11,6 +11,9 @@ public class BookService : ServiceBase<Db>
 {
     public BookService(Db db) : base(db)
     {
+        // 手动打开数据库连接（可选）
+        // Dapper 每次数据库操作都会自动打开和关闭一个数据库连接
+        // 在 Dapper 操作数据库之前手动打开数据库连接，则 Dapper 不会自动关闭该连接，这样可以使一个会话中的多次数据库操作使用同一个数据库连接。
         db.Connection.Open();
     }
 
@@ -117,7 +120,7 @@ public class BookService : ServiceBase<Db>
 
     public async Task DeleteAsync(long id)
     {
-        var rows = await Db.DeleteAsync("Book", new { Id = id });
+        var rows = await Db.DeleteAsync<Book>(new { Id = id });
         if (rows == 0)
         {
             throw new NotFoundException();
