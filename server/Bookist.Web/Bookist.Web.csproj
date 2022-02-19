@@ -7,7 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Anet.Web" Version="0.7.13" />
+	  <PackageReference Include="Anet.Web" Version="0.7.16" />
 	  <PackageReference Include="MySqlConnector" Version="2.1.6" />
 	</ItemGroup>
 

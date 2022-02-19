@@ -1,4 +1,3 @@
-using Anet.Data;
 using Bookist;
 using Bookist.Services;
 using Bookist.Web;
@@ -18,12 +17,12 @@ Mapping.Config();
 
 builder.Services
     .AddAnet(opt => opt.EnableDefaultIdGen(0, 1, 5))
-    .AddDb<MySqlConnection>(DbDialect.MySQL, cnn, opt =>
+    .AddAnetDb<MySqlConnection>(cnn, opt =>
     {
         opt.EnableMetrics = true;
         opt.LogSensitiveData = true;
     })
-    .AddApi(withViews: true);
+    .AddAnetApi(withViews: true);
 
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
