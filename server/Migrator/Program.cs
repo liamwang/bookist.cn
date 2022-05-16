@@ -6,16 +6,11 @@ using Migrator;
 
 var host = Host.CreateDefaultBuilder(args);
 
-host.ConfigureAppConfiguration(options =>
-{
-    options.AddJsonFile("appsettings.Local.json");
-});
-
 host.ConfigureServices((builder, services) =>
 {
     services.AddDbContext<MainDbContext>(opt =>
     {
-        var conStr = builder.Configuration.GetConnectionString("BookistConnection");
+        var conStr = builder.Configuration.GetConnectionString("GeekGistConnection");
         opt.UseMySql(conStr, ServerVersion.AutoDetect(conStr), o => o.MigrationsAssembly("Migrator"));
     });
     services.AddTransient<MockData>();

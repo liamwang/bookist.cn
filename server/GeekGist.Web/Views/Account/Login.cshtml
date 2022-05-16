@@ -1,0 +1,39 @@
+﻿@model LoginVM
+@{
+    Layout = "AppLayout";
+    ViewData["Title"] = "管理员登录";
+    var message = TempData["Message"]?.ToString();
+}
+<div class="container">
+    <div class="row justify-content-center pt-5">
+        <div class="col-lg-4 col-md-6">
+            <h2 class="border-bottom pb-2 mb-4">管理员登录</h2>
+            <form asp-action="Login">
+                @if (!string.IsNullOrEmpty(message))
+                {
+                    <div class="alert alert-danger">
+                        @message
+                    </div>
+                }
+                <input asp-for="ReturnUrl" type="hidden" />
+                <div class="mb-3">
+                    <label asp-for="Username" class="control-label">用户名</label>
+                    <input asp-for="Username" class="form-control" placeholder="admin" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Password" class="control-label">密码</label>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="geekgist" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" asp-for="RememberMe" class="form-check-input" />
+                    <label asp-for="RememberMe" class="form-check-label">记住我</label>
+                </div>
+                <div class="d-grid">
+                    <input type="submit" value="登 录" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

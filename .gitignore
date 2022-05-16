@@ -33,3 +33,6 @@ packages
 *.suo
 *.user
 ~$*
+
+build
+appsettings.*.json

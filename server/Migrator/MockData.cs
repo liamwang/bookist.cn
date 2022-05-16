@@ -1,4 +1,4 @@
-﻿using Bookist.Entities;
+﻿using GeekGist.Entities;
 
 namespace Migrator;
 

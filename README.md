@@ -1,17 +1,17 @@
-<h1 align="center">bookist.cc</h1>
+<h1 align="center">GeekGist</h1>
 
 <div align="center">
 
-An e-book sharing website built with .NET 6
+An e-book sharing website built with .NET 6 and Vue 3
 
-一个基于 .NET 6 开发的电子书分享网站
+一个基于 .NET 6 + Vue 3 开发的电子书分享网站
 
 </div>
 
 ## 前台预览
 
-![image](https://user-images.githubusercontent.com/5000396/154002521-89f77f72-682d-4d34-8b1f-6ee24445b59c.png)
+![image](https://user-images.githubusercontent.com/5000396/168532917-db16a4fc-8d6a-4cc5-a7d5-4f3df41a803f.png)
 
 ## 后台预览
 
-![image](https://user-images.githubusercontent.com/5000396/154002728-df998dc4-ebfa-4f92-a3ce-60d9df025f43.png)
+![image](https://user-images.githubusercontent.com/5000396/168533936-380f3a1d-dbe4-4fb3-9b40-4e609925f82f.png)

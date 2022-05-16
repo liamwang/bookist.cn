@@ -1,5 +1,5 @@
 {
-  "npm.packageManager": "yarn",
+  "npm.packageManager": "pnpm",
   "editor.formatOnSave": true,
   "prettier.requireConfig": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -18,6 +18,5 @@
   },
   "files.associations": {
     "appsettings*.json": "jsonc"
-  },
-  "vssolution.altSolutionFolders": ["server"]
+  }
 }

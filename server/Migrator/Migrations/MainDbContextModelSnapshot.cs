@@ -19,7 +19,7 @@ namespace Migrator.Migrations
                 .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Bookist.Entities.Book", b =>
+            modelBuilder.Entity("GeekGist.Entities.Book", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -85,7 +85,7 @@ namespace Migrator.Migrations
                     b.ToTable("Book");
                 });
 
-            modelBuilder.Entity("Bookist.Entities.BookTag", b =>
+            modelBuilder.Entity("GeekGist.Entities.BookTag", b =>
                 {
                     b.Property<long>("BookId")
                         .HasColumnType("bigint");
@@ -100,7 +100,7 @@ namespace Migrator.Migrations
                     b.ToTable("BookTag");
                 });
 
-            modelBuilder.Entity("Bookist.Entities.Tag", b =>
+            modelBuilder.Entity("GeekGist.Entities.Tag", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -115,15 +115,15 @@ namespace Migrator.Migrations
                     b.ToTable("Tag");
                 });
 
-            modelBuilder.Entity("Bookist.Entities.BookTag", b =>
+            modelBuilder.Entity("GeekGist.Entities.BookTag", b =>
                 {
-                    b.HasOne("Bookist.Entities.Book", "Book")
+                    b.HasOne("GeekGist.Entities.Book", "Book")
                         .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bookist.Entities.Tag", "Tag")
+                    b.HasOne("GeekGist.Entities.Tag", "Tag")
                         .WithMany()
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>adfa2b88-1fe4-438e-b567-03296ac46b2d</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Anet.Web" Version="0.7.16" />
+	  <PackageReference Include="MySqlConnector" Version="2.1.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\GeekGist\GeekGist.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
+	</ItemGroup>
+
+</Project>
