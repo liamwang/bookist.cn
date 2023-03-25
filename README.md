@@ -1,4 +1,4 @@
-<h1 align="center">Booist</h1>
+<h1 align="center">Bookist</h1>
 
 <div align="center">
 
